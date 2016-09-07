@@ -20,18 +20,18 @@ import 'gsap';
 })
 export class ExamplesComponent implements OnInit {
   // ngOnInit() {}
-  // circles: any[] = [];
-  //
-  // ngOnInit() {
-  //   const OFFSET = 25;
-  //   Observable.fromEvent(document, 'mousemove')
-  //     .map(event => {
-  //       return { x: event.clientX, y: event.clientY}
-  //     })
-  //     .subscribe(event => {
-  //       this.circles = [...this.circles, { x: event.x - OFFSET, y: event.y - OFFSET}];
-  //     })
-  // }
+  circles: any[] = [];
+
+  ngOnInit() {
+    const OFFSET = 25;
+    Observable.fromEvent(document, 'mousemove')
+      .map(event => {
+        return { x: event.clientX, y: event.clientY}
+      })
+      .subscribe(event => {
+        this.circles = [...this.circles, { x: event.x - OFFSET, y: event.y - OFFSET}];
+      })
+  }
 
   // @ViewChild('ball') ball;
   // ngOnInit() {
@@ -47,29 +47,27 @@ export class ExamplesComponent implements OnInit {
   //     })
   // }
 
-  ngOnInit() {
-
-    // Observable.fromEvent(document, 'click')
-    Observable.fromEvent(document, 'mousemove')
-      .map(event => {
-        return {x: event.pageX, y: event.pageY};
-      })
-      .pairwise(2)
-      .subscribe(coordinates => {
-        const c1 = coordinates[0];
-        const c2 = coordinates[1];
-        const line = $(`
-          <svg style="position: absolute" width="1000" height="1000">
-            <line x1="${c1.x}" y1="${c1.y}"
-              x2="${c2.x}" y2="${c2.y}"
-              style="stroke:rgb(255,0,0);stroke-width:2" />
-          </svg>
-        `);
-        $('.container').append(line);
-      });
-  }
-
-
+  // ngOnInit() {
+  //
+  //   // Observable.fromEvent(document, 'click')
+  //   Observable.fromEvent(document, 'mousemove')
+  //     .map(event => {
+  //       return {x: event.pageX, y: event.pageY};
+  //     })
+  //     .pairwise(2)
+  //     .subscribe(coordinates => {
+  //       const c1 = coordinates[0];
+  //       const c2 = coordinates[1];
+  //       const line = $(`
+  //         <svg style="position: absolute" width="1000" height="1000">
+  //           <line x1="${c1.x}" y1="${c1.y}"
+  //             x2="${c2.x}" y2="${c2.y}"
+  //             style="stroke:rgb(255,0,0);stroke-width:2" />
+  //         </svg>
+  //       `);
+  //       $('.container').append(line);
+  //     });
+  // }
 
   // ngOnInit() {
   //   Observable.fromEvent(document, 'mousemove')
