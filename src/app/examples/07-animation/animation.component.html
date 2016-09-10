@@ -1,0 +1,7 @@
+<div class="container">
+  <app-circle
+    *ngFor="let circle of circles"
+    [style.left]="circle.x + 'px'"
+    [style.top]="circle.y + 'px'">
+  </app-circle>
+</div>
