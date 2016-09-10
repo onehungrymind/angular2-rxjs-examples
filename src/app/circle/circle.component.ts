@@ -10,6 +10,7 @@ export class CircleComponent implements OnInit {
   @ViewChild('circle') circle;
 
   ngOnInit() {
-    TweenMax.to(this.circle.nativeElement, 2, {alpha: 0, width: 0, height: 0});
+    TweenMax.to(this.circle.nativeElement, 2,
+      {alpha: 0, width: 0, height: 0});
   }
 }

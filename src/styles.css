@@ -9,8 +9,6 @@
     width: 100px;
     height: 100px;
     position: absolute;
-    top: 0;
-    left: 0;
     background-image: radial-gradient(orange, red);
 }
 .circle {

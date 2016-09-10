@@ -1,37 +1,52 @@
+<!-- SIX -->
 <div class="container">
 	<app-circle
 		*ngFor="let circle of circles"
-		[ngStyle]="{'left': circle.x + 'px', 'top': circle.y + 'px'}"
-	></app-circle>
+		[style.left]="circle.x + 'px'"
+		[style.top]="circle.y + 'px'">
+	</app-circle>
 </div>
 
-<!-- FIVE
-<div class="container"></div>
--->
 
-<!-- FOUR
+<!-- FIVE: Animation
 <div class="container">
 	<div #ball class="ball"></div>
 </div>
 -->
 
-<!-- THREE
+<!-- FOUR
 <div class="container">
-	<div #ball class="ball" [ngStyle]="{'left': coordinates.x + 'px', 'top': coordinates.y + 'px'}"></div>
+	<app-line
+		*ngFor="let line of lines" [line]="line">
+	</app-line>
 </div>
 -->
 
-<!-- TWO
+<!-- TWO AND THREE -->
+<!--<pre>{{position|json}}</pre>
 <div class="container">
-	<div #ball class="ball" [ngStyle]="{'left': coordinates.x + 'px', 'top': coordinates.y + 'px'}"></div>
+	<div #ball class="ball"
+		[style.left]="position.x + 'px'"
+		[style.top]="position.y + 'px'">
+	</div>
 </div>
 -->
+
 
 <!-- ONE
 <button #left md-raised-button color="accent">Left</button>
 <button #right md-raised-button color="accent">Right</button>
-<hr>
 <div class="container">
-  <div #ball class="ball" [ngStyle]="{'left': coordinates.x + 'px', 'top': coordinates.y + 'px'}"></div>
+	<div #ball class="ball"
+		[style.left]="position.x + 'px'"
+		[style.top]="position.y + 'px'">
+	</div>
+</div>
+-->
+
+<!-- ZERO
+<button #btn md-raised-button color="accent">Click me!</button>
+<div class="container">
+	<h1>{{message}}</h1>
 </div>
 -->

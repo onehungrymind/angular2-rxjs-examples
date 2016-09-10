@@ -8,12 +8,14 @@ import { ExamplesComponent } from './examples/examples.component';
 import { MdButtonModule } from "@angular2-material/button";
 import {MdCardModule} from "@angular2-material/card";
 import { CircleComponent } from './circle/circle.component';
+import { LineComponent } from './line/line.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExamplesComponent,
-    CircleComponent
+    CircleComponent,
+    LineComponent
   ],
   imports: [
     BrowserModule,

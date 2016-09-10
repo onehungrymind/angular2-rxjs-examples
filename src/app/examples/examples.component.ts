@@ -6,10 +6,10 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/pairwise';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/takeUntil';
 import 'gsap';
 
@@ -20,76 +20,55 @@ import 'gsap';
 })
 export class ExamplesComponent implements OnInit {
   // ngOnInit() {}
-  circles: any[] = [];
 
+  circles: any[] = [];
   ngOnInit() {
     const OFFSET = 25;
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        return { x: event.clientX, y: event.clientY}
+        return { x: event.clientX - OFFSET, y: event.clientY - OFFSET}
       })
-      .subscribe(event => {
-        this.circles = [...this.circles, { x: event.x - OFFSET, y: event.y - OFFSET}];
+      .subscribe(circle => {
+        this.circles = [ ...this.circles, circle];
       })
   }
 
+  // E5
   // @ViewChild('ball') ball;
   // ngOnInit() {
   //   const OFFSET = 50;
   //
-  //   // Observable.fromEvent(document, 'click')
-  //   Observable.fromEvent(document, 'mousemove')
+  //   Observable.fromEvent(document, 'click')
   //     .map(event => {
   //       return {x: event.clientX - OFFSET, y: event.clientY - OFFSET}
   //     })
-  //     .subscribe(event => {
-  //       TweenMax.to(this.ball.nativeElement, 1, {x: event.x, y: event.y});
+  //     .subscribe(props => {
+  //       TweenMax.to(this.ball.nativeElement, 1, props);
   //     })
   // }
 
+  // E4
+  // Observable.fromEvent(document, 'mousemove')
+  // lines: any[] = [];
   // ngOnInit() {
-  //
-  //   // Observable.fromEvent(document, 'click')
   //   Observable.fromEvent(document, 'mousemove')
   //     .map(event => {
   //       return {x: event.pageX, y: event.pageY};
   //     })
   //     .pairwise(2)
-  //     .subscribe(coordinates => {
-  //       const c1 = coordinates[0];
-  //       const c2 = coordinates[1];
-  //       const line = $(`
-  //         <svg style="position: absolute" width="1000" height="1000">
-  //           <line x1="${c1.x}" y1="${c1.y}"
-  //             x2="${c2.x}" y2="${c2.y}"
-  //             style="stroke:rgb(255,0,0);stroke-width:2" />
-  //         </svg>
-  //       `);
-  //       $('.container').append(line);
+  //     .map(positions => {
+  //       const p1 = positions[0];
+  //       const p2 = positions[1];
+  //       return { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y };
+  //     })
+  //     .subscribe(line => {
+  //       this.lines = [...this.lines, line];
   //     });
   // }
 
-  // ngOnInit() {
-  //   Observable.fromEvent(document, 'mousemove')
-  //     .map(event => {
-  //       return { x: event.clientX, y: event.clientY}
-  //     })
-  //     .subscribe(event => {
-  //       const circle = $(`<span class="circle"></span>`);
-  //       circle.css({
-  //         left:event.x,
-  //         top:event.y
-  //       })
-  //       $('.container').append(circle);
-  //     })
-  // }
-
+  // E3
   // @ViewChild('ball') ball;
-  //
-  // coordinates = {
-  //   x: 100,
-  //   y: 100
-  // };
+  // position: any;
   //
   // ngOnInit() {
   //   const OFFSET = 50;
@@ -102,40 +81,51 @@ export class ExamplesComponent implements OnInit {
   //   const up$ = Observable.fromEvent(document, 'mouseup');
   //
   //   down$
-  //     .mergeMap(event => move$.takeUntil(up$))
+  //     .switchMap(event => move$.takeUntil(up$))
+  //     .startWith({ x: 100, y: 100})
   //     .subscribe(result => {
-  //       this.coordinates = result;
+  //       this.position = result;
   //     });
   // }
 
+  // E2
+  // increment(obj, prop, value) {
+  //   return Object.assign({}, obj, {[prop]: obj[prop] + value})
+  // }
+  //
+  // decrement(obj, prop, value) {
+  //   return Object.assign({}, obj, {[prop]: obj[prop] - value})
+  // }
+  //
   // ngOnInit() {
   //   const leftArrow$ = Observable.fromEvent(document, 'keydown')
   //     .filter(event => event.key === 'ArrowLeft')
-  //     .mapTo(coordinates => Object.assign({}, coordinates, {x: coordinates.x - 10}));
+  //     .mapTo(position => this.decrement(position, 'x', 10));
   //
   //   const rightArrow$ = Observable.fromEvent(document, 'keydown')
   //     .filter(event => event.key === 'ArrowRight')
-  //     .mapTo(coordinates => Object.assign({}, coordinates, {x: coordinates.x + 10}));
+  //     .mapTo(position => this.increment(position, 'x', 10));
   //
   //   const upArrow$ = Observable.fromEvent(document, 'keydown')
   //     .filter(event => event.key === 'ArrowUp')
-  //     .mapTo(coordinates => Object.assign({}, coordinates, {y: coordinates.y - 10}));
+  //     .mapTo(position => this.increment(position, 'x', 10));
   //
   //   const downArrow$ = Observable.fromEvent(document, 'keydown')
   //     .filter(event => event.key === 'ArrowDown')
-  //     .mapTo(coordinates => Object.assign({}, coordinates, {y: coordinates.y + 10}));
+  //     .mapTo(position => this.decrement(position, 'x', 10));
   //
   //   Observable.merge(leftArrow$, rightArrow$, upArrow$, downArrow$)
   //     .startWith({x: 100, y: 100})
   //     .scan((acc, curr) => curr(acc))
   //     .subscribe(result => {
-  //       this.coordinates = result;
+  //       this.position = result;
   //     });
   // }
 
+  // E1
   // @ViewChild('left') left;
   // @ViewChild('right') right;
-  // @ViewChild('ball') ball;
+  // position: any;
   //
   // ngOnInit() {
   //   const left$ = Observable.fromEvent(this.getNativeElement(this.left), 'click')
@@ -148,8 +138,36 @@ export class ExamplesComponent implements OnInit {
   //     .startWith({x: 100, y: 100})
   //     .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
   //     .subscribe(result => {
-  //       this.coordinates = result;
+  //       this.position = result;
   //     });
+  // }
+  //
+  // getNativeElement(element) {
+  //   return element._elementRef.nativeElement;
+  // }
+
+  // E0.1
+  // @ViewChild('btn') btn;
+  // message: string;
+  //
+  // ngOnInit() {
+  //   Observable.fromEvent(this.getNativeElement(this.btn), 'click')
+  //     .filter(event => event.shiftKey)
+  //     .map(event => 'Beast Mode Activated!')
+  //     .subscribe(result => this.message = result);
+  // }
+  //
+  // getNativeElement(element) {
+  //   return element._elementRef.nativeElement;
+  // }
+
+  // E0.0
+  // @ViewChild('btn') btn;
+  // message: string;
+  //
+  // ngOnInit() {
+  //   Observable.fromEvent(this.getNativeElement(this.btn), 'click')
+  //     .subscribe(result => this.message = 'Beast Mode Activated!');
   // }
   //
   // getNativeElement(element) {
