@@ -29,8 +29,14 @@ export class MergingStreamsComponent implements OnInit {
       .map(event => 10);
 
     const local$ = Observable.merge(left$, right$)
+      //  The following works correctly but involves outside state
+      .map(space => Object.assign({}, this.position, {x: this.position.x + space}))
+
       .startWith({x: 100, y: 100})
-      .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
+
+      //  If we use the below, it appears to "work", but it doesn't sync up quite right across tabs
+      // .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
+
       .do(event => remote$.update(event))
       .subscribe();
 
