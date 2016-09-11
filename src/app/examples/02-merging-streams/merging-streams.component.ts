@@ -30,7 +30,7 @@ export class MergingStreamsComponent implements OnInit {
 
     const local$ = Observable.merge(left$, right$)
       //  The following works correctly but involves outside state
-      .map(space => Object.assign({}, this.position, {x: this.position.x + space}))
+      .map(space => Object.assign({}, {x: this.position.x + space, y: this.position.y}))
 
       .startWith({x: 100, y: 100})
 
