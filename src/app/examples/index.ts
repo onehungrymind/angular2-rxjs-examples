@@ -28,4 +28,9 @@ export { AnnotateClientComponent } from "./12-annotate/annotate-client.component
 export { AnnotateMasterComponent } from "./12-annotate/annotate-master.component";
 
 export { GameComponent } from "./13-game/game.component";
+export { GameClientComponent } from "./13-game/game-client.component";
+export { GameMasterComponent } from "./13-game/game-master.component";
+
 export { SliderComponent } from "./14-slider/slider.component";
+export { SliderClientComponent } from "./14-slider/slider-client.component";
+export { SliderMasterComponent } from "./14-slider/slider-master.component";

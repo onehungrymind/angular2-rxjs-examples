@@ -43,7 +43,11 @@ import {
   AnnotateClientComponent,
   AnnotateMasterComponent,
   GameComponent,
-  SliderComponent
+  GameClientComponent,
+  GameMasterComponent,
+  SliderComponent,
+  SliderClientComponent,
+  SliderMasterComponent
 } from './examples';
 
 export const firebaseConfig = {
@@ -83,7 +87,11 @@ export const firebaseConfig = {
     AnnotateClientComponent,
     AnnotateMasterComponent,
     GameComponent,
-    SliderComponent
+    GameClientComponent,
+    GameMasterComponent,
+    SliderComponent,
+    SliderClientComponent,
+    SliderMasterComponent
   ],
   imports: [
     BrowserModule,
