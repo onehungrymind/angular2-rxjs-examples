@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-location',
-  templateUrl: './location.component.html',
-  styleUrls: ['./location.component.css']
+  styles: [`
+    md-card {
+      width: 400px;
+      box-sizing: border-box;
+      margin: 16px;
+    }
+    .card-container {
+      display: flex;
+      flex-flow: row wrap;
+    }
+    `],
+  template: `
+    <div class="card-container">
+        <md-card>
+          <app-location-master></app-location-master>
+        </md-card>
+        <md-card>
+            <app-location-client></app-location-client>
+        </md-card>
+    </div>
+    `
 })
-export class LocationComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class LocationComponent {}
