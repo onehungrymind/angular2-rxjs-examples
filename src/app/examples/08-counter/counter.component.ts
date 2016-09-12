@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-counter',
@@ -24,4 +24,4 @@ import { Component, OnInit } from '@angular/core';
     </div>
     `
 })
-export class CounterComponent implements OnInit {}
+export class CounterComponent {}

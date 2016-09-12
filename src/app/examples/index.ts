@@ -12,6 +12,8 @@ export { CounterClientComponent } from "./08-counter/counter-client.component";
 export { CounterMasterComponent } from "./08-counter/counter-master.component";
 
 export { SlideshowComponent } from "./09-slideshow/slideshow.component";
+export { SlideshowClientComponent } from "./09-slideshow/slideshow-client.component";
+export { SlideshowMasterComponent } from "./09-slideshow/slideshow-master.component";
 
 export { LocationComponent } from "./10-location/location.component";
 export { LocationClientComponent } from "./10-location/location-client.component";
