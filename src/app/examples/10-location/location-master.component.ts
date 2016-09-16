@@ -27,11 +27,31 @@ export class LocationMasterComponent implements OnInit {
   ngOnInit() {
     const remote$ = this.af.database.object('location/');
 
-    const OFFSET = { X: 110, Y: 160};
+    const OFFSET = 45;
 
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        return {x: event.clientX - OFFSET.X, y: event.clientY - OFFSET.Y};
+        const PARENT_OFFSET = event.path
+          .filter(path => {
+            return path.tagName
+              && !path.tagName.includes('APP-LOCATION')
+              && path.className !== 'ball'
+              && path.className !== 'app-content'
+          })
+          .reduce((acc, curr) => {
+            const offsetLeft = curr.offsetLeft || 0,
+              offsetTop = curr.offsetTop || 0;
+
+            return {
+              x: acc.x + offsetLeft,
+              y: acc.y + offsetTop
+            };
+          }, {x: 0, y: 0});
+
+        return {
+          x: event.clientX - PARENT_OFFSET.x - OFFSET,
+          y: event.clientY - PARENT_OFFSET.y - OFFSET
+        };
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown');
