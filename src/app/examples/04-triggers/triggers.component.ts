@@ -19,11 +19,20 @@ export class TriggersComponent implements OnInit {
     const OFFSET = 50;
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        return {x: event.clientX - OFFSET, y: event.clientY - OFFSET};
+        const path = event.path
+          .find(path => path.className === 'md-sidenav-content'),
+          offsetLeft = path ? path.offsetLeft : -10000;
+
+        return {x: event.clientX - offsetLeft - OFFSET, y: event.pageY - OFFSET};
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown');
     const up$ = Observable.fromEvent(document, 'mouseup');
+
+    // This implementation uses the async pipe
+    // this.position = down$
+    //   .switchMap(event => move$.takeUntil(up$))
+    //   .startWith({ x: 100, y: 100});
 
     down$
       .switchMap(event => move$.takeUntil(up$))

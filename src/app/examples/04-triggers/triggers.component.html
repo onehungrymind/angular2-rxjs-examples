@@ -1,3 +1,10 @@
+<!-- This implementation uses the async pipe -->
+<!--<div class="container">
+  <div #ball class="ball"
+    [style.left]="(position | async)?.x + 'px'"
+    [style.top]="(position | async)?.y + 'px'">
+  </div>
+</div>-->
 <div class="container">
   <div #ball class="ball"
     [style.left]="position.x + 'px'"
