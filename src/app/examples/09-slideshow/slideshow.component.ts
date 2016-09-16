@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-slideshow',
   styles: [`
   md-card {
-    width: 400px;
+    width: 100%;
+    max-width: 900px;
     box-sizing: border-box;
     margin: 16px;
   }
