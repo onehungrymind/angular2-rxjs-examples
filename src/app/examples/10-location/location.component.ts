@@ -3,6 +3,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-location',
   styles: [`
+    .card-container {
+      position:fixed;
+      top: 70px;
+      bottom: 0;
+    }
     md-card {
       width: 400px;
       box-sizing: border-box;
