@@ -31,8 +31,6 @@ export class LocationMasterComponent implements OnInit {
 
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        console.log('EVENT: ', event);
-        console.log('page-Y: ', event.pageY);
         return {x: event.clientX - OFFSET.X, y: event.clientY - OFFSET.Y};
       });
 
