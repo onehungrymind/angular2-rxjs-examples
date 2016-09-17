@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { CURSOR_OFFSET, HEADER_OFFSET, getSidenavOffsetLeft } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/pairwise';
@@ -15,7 +16,9 @@ export class StreamOriginComponent implements OnInit {
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
       .map(event => {
-        return {x: event.clientX, y: event.clientY};
+        const offsetLeft = getSidenavOffsetLeft(event.path);
+
+        return {x: event.clientX - offsetLeft - CURSOR_OFFSET, y: event.pageY - HEADER_OFFSET - CURSOR_OFFSET};
       })
       .pairwise(2)
       .map(positions => {

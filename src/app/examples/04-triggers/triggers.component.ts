@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BIG_BALL_OFFSET, getSidenavOffsetLeft } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
@@ -16,14 +17,14 @@ export class TriggersComponent implements OnInit {
   position: any;
 
   ngOnInit() {
-    const OFFSET = 50;
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        const path = event.path
-          .find(path => path.className === 'md-sidenav-content'),
-          offsetLeft = path ? path.offsetLeft : -10000;
+        const offsetLeft = getSidenavOffsetLeft(event.path);
 
-        return {x: event.clientX - offsetLeft - OFFSET, y: event.pageY - OFFSET};
+        return {
+          x: event.clientX - offsetLeft - BIG_BALL_OFFSET,
+          y: event.pageY - BIG_BALL_OFFSET
+        };
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown');

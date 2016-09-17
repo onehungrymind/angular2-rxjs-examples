@@ -1,11 +1,6 @@
 body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-.container {
-    position: relative;
-    width: 1000px;
-    height: 1000px;
-}
 .ball {
     cursor: pointer;
     border-radius: 50%;
