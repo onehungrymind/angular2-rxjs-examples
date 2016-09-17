@@ -18,7 +18,7 @@ export class MaintainingStateComponent implements OnInit {
   ngOnInit() {
     Observable.fromEvent(this.getNativeElement(this.right), 'click')
       .map(event => 10)
-      .startWith({x: 100, y: 100})
+      .startWith({x: 100, y: 150})
       .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
       .subscribe(result => {
         this.position = result;
