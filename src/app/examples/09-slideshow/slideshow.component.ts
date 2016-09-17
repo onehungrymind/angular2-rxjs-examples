@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
     max-width: 900px;
     box-sizing: border-box;
     margin: 16px;
+    overflow: hidden;
   }
   .card-container {
     display: flex;

@@ -27,23 +27,21 @@ export class SlideshowMasterComponent implements OnInit {
     const remote$ = this.af.database.object('slideshow/');
 
     const previous$ = Observable.fromEvent(this.getNativeElement(this.previous), 'click')
-      .map(event => -1);
+      .map(event => {return {shift: -1, direction: 'right'}});
 
     const next$ = Observable.fromEvent(this.getNativeElement(this.next), 'click')
-      .map(event => +1);
+      .map(event => {return {shift: +1, direction: 'left'}});
 
     Observable.merge(previous$, next$)
       .startWith({index: 0})
       .scan((acc, curr) => {
-        const newIndex = acc.index + curr;
+        const projectedIndex = acc.index + curr.shift;
 
-        if (newIndex < 0) {
-          return {index: this.images.length - 1};
-        } else if (newIndex >= this.images.length) {
-          return {index: 0};
-        } else {
-          return Object.assign({}, {index: newIndex});
-        }
+        let adjustedIndex = projectedIndex < 0 ? this.images.length - 1
+          : projectedIndex >= this.images.length ? 0
+          : projectedIndex;
+
+        return {index: adjustedIndex, direction: curr.direction};
       })
       .do(event => remote$.update(event))
       .subscribe(result => {
