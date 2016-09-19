@@ -1,6 +1,13 @@
-export const getSidenavOffsetLeft = (path) => {
-  const sidenavPath = path
-    .find(path => path.className === 'md-sidenav-content');
+export const getOffsetLeft = event => {
+  const offsetParent = event.target.offsetParent || event.target.parentElement.offsetParent;
 
-  return sidenavPath ? sidenavPath.offsetLeft : -10000;
+  return offsetParent.offsetLeft;
+};
+
+export const getOffsetTop = event => {
+  return event.srcElement.offsetTop || event.offsetY - event.layerY;
+};
+
+export const getSourceElement = () => {
+  return document.getElementsByClassName('app-content')[0];
 };

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BIG_BALL_OFFSET, getSidenavOffsetLeft } from '../../shared';
+import { BIG_BALL_OFFSET, getOffsetLeft, getSourceElement } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
@@ -17,12 +17,10 @@ export class TriggersComponent implements OnInit {
   position: any;
 
   ngOnInit() {
-    const move$ = Observable.fromEvent(document, 'mousemove')
+    const move$ = Observable.fromEvent(getSourceElement(), 'mousemove')
       .map(event => {
-        const offsetLeft = getSidenavOffsetLeft(event.path);
-
         return {
-          x: event.clientX - offsetLeft - BIG_BALL_OFFSET,
+          x: event.clientX - getOffsetLeft(event) - BIG_BALL_OFFSET,
           y: event.pageY - BIG_BALL_OFFSET
         };
       });
