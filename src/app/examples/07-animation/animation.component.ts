@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { SMALL_BALL_OFFSET, getSidenavOffsetLeft } from '../../shared';
+import { SMALL_BALL_OFFSET, getOffsetLeft, getSourceElement } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 
@@ -13,12 +13,10 @@ export class AnimationComponent implements OnInit {
   circles: any[] = [];
 
   ngOnInit() {
-    Observable.fromEvent(document, 'mousemove')
+    Observable.fromEvent(getSourceElement(), 'mousemove')
       .map(event => {
-        const offsetLeft = getSidenavOffsetLeft(event.path);
-
         return {
-          x: event.clientX - offsetLeft - SMALL_BALL_OFFSET,
+          x: event.clientX - getOffsetLeft(event) - SMALL_BALL_OFFSET,
           y: event.pageY - SMALL_BALL_OFFSET
         };
       })

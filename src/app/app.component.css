@@ -1,3 +1,8 @@
+md-toolbar {
+  position: relative;
+  z-index:1;
+}
+
 .app-content {
     padding: 20px;
 
