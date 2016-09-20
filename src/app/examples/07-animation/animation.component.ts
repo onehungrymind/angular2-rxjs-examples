@@ -16,7 +16,7 @@ export class AnimationComponent implements OnInit {
     Observable.fromEvent(getSourceElement(), 'mousemove')
       .map(event => {
         return {
-          x: event.clientX - getOffsetLeft(event) - SMALL_BALL_OFFSET,
+          x: event.clientX - getOffsetLeft(event, null) - SMALL_BALL_OFFSET,
           y: event.pageY - SMALL_BALL_OFFSET
         };
       })

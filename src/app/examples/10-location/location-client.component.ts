@@ -10,12 +10,10 @@ import 'rxjs/add/operator/startWith';
 @Component({
   selector: 'app-location-client',
   template: `
-  <div class="container">
     <div #ball class="ball"
       [style.left]="position.x + 'px'"
       [style.top]="position.y + 'px'">
     </div>
-  </div>
   `
 })
 export class LocationClientComponent implements OnInit {

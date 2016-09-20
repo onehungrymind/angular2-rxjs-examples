@@ -19,7 +19,7 @@ export class SimpleAnimationComponent implements OnInit {
       .map(event => {
 
         return {
-          x: event.clientX - getOffsetLeft(event) - BIG_BALL_OFFSET - CURSOR_OFFSET,
+          x: event.clientX - getOffsetLeft(event, null) - BIG_BALL_OFFSET - CURSOR_OFFSET,
           y: event.pageY - getOffsetTop(event) - BIG_BALL_OFFSET - CURSOR_OFFSET
         };
       })

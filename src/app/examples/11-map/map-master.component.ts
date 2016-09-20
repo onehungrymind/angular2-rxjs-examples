@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
+import { BIG_BALL_OFFSET, getOffsetTop, getOffsetLeft, getSourceElement } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/pairwise';
@@ -8,11 +9,9 @@ import 'rxjs/add/operator/pairwise';
 @Component({
   selector: 'app-map-master',
   template: `
-  <div class="container">
-    <app-line
-      *ngFor="let line of lines" [line]="line">
-    </app-line>
-  </div>
+  <app-line
+    *ngFor="let line of lines" [line]="line">
+  </app-line>
   `
 })
 export class MapMasterComponent implements OnInit {
@@ -25,7 +24,10 @@ export class MapMasterComponent implements OnInit {
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
       .map(event => {
-        return {x: event.clientX, y: event.clientY};
+        return {
+          x: event.clientX - getOffsetLeft(event, null),
+          y: event.clientY - getOffsetTop(event)
+        };
       })
       .pairwise(2)
       .map(positions => {
