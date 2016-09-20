@@ -28,6 +28,7 @@
     "@angular2-material/sidenav": "^2.0.0-alpha.8-1",
     "@angular2-material/toolbar": "^2.0.0-alpha.8-1",
     "@types/firebase": "^2.4.29",
+    "@types/jquery": "^2.0.32",
     "angularfire2": "^2.0.0-beta.4",
     "core-js": "^2.4.0",
     "firebase": "^3.3.2",

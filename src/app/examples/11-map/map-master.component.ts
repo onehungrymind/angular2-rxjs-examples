@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
-import { BIG_BALL_OFFSET, getOffsetTop, getOffsetLeft, getSourceElement } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/pairwise';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-map-master',
@@ -17,16 +18,18 @@ import 'rxjs/add/operator/pairwise';
 export class MapMasterComponent implements OnInit {
   lines: any[] = [];
 
-  constructor(private af: AngularFire) {}
+  constructor(private af: AngularFire, private elementRef:ElementRef) {}
 
   ngOnInit() {
     const remote$ = this.af.database.object('map/');
+
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
       .map(event => {
+        const offset = $(event.target).offset();
         return {
-          x: event.clientX - getOffsetLeft(event, null),
-          y: event.clientY - getOffsetTop(event)
+          x: event.clientX - offset.left,
+          y: event.clientY - offset.top
         };
       })
       .pairwise(2)

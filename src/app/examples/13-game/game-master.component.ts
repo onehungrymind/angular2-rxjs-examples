@@ -22,12 +22,16 @@ export class GameMasterComponent implements OnInit {
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
-    const OFFSET = 25;
+    const BALL_OFFSET = 50;
     const remote$ = this.af.database.object('animation/');
 
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        return {x: event.clientX - OFFSET, y: event.clientY - OFFSET}
+        const offset = $(event.target).offset();
+        return {
+          x: event.clientX - offset.left - BALL_OFFSET,
+          y: event.clientY - offset.top - BALL_OFFSET
+        };
       })
       .do(event => remote$.update(event))
       .subscribe(circle => {

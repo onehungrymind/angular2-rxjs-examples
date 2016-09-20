@@ -24,7 +24,11 @@ export class AnnotateMasterComponent implements OnInit {
     const remote$ = this.af.database.object('annotate/');
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
-        return {x: event.clientX, y: event.clientY};
+        const offset = $(event.target).offset();
+        return {
+          x: event.clientX - offset.left,
+          y: event.clientY - offset.top
+        };
       })
       .pairwise(2)
       .map(positions => {

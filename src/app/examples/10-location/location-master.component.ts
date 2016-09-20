@@ -35,6 +35,16 @@ export class LocationMasterComponent implements OnInit {
         };
       });
 
+    // const move$ = Observable.fromEvent(document, 'mousemove')
+    //   .map(event => {
+    //     const offset = $(this.ball.nativeElement).offset();
+    //
+    //     return {
+    //       x: event.clientX - offset.left - BIG_BALL_OFFSET,
+    //       y: event.clientY - offset.top - BIG_BALL_OFFSET
+    //     };
+    //   });
+
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown');
     const up$ = Observable.fromEvent(document, 'mouseup');
 
