@@ -9,6 +9,9 @@ import { Component } from '@angular/core';
     margin: 16px;
   }
   .card-container {
+    position:fixed;
+    top: 70px;
+    bottom: 0;
     display: flex;
     flex-flow: row wrap;
   }

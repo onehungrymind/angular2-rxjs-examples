@@ -13,10 +13,11 @@ export class AnimationComponent implements OnInit {
   circles: any[] = [];
 
   ngOnInit() {
-    Observable.fromEvent(getSourceElement(), 'mousemove')
+    Observable.fromEvent(document, 'mousemove')
       .map(event => {
+        const offset = $(event.target).offset();
         return {
-          x: event.clientX - getOffsetLeft(event, null) - SMALL_BALL_OFFSET,
+          x: event.clientX - offset.left - SMALL_BALL_OFFSET,
           y: event.pageY - SMALL_BALL_OFFSET
         };
       })

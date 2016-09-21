@@ -8,15 +8,15 @@ import 'rxjs/add/operator/pairwise';
 @Component({
   selector: 'app-annotate-master',
   template: `
-  <div class="container">
+    <app-line [line]="emptyLine"></app-line>
     <app-line
       *ngFor="let line of lines" [line]="line">
     </app-line>
-  </div>
   `
 })
 export class AnnotateMasterComponent implements OnInit {
   lines: any[] = [];
+  emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
   constructor(private af: AngularFire) {}
 
@@ -25,6 +25,9 @@ export class AnnotateMasterComponent implements OnInit {
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
         const offset = $(event.target).offset();
+        console.log('TARGET: ', event.target);
+        console.log('OFFSET: ', $(event.target).offset());
+
         return {
           x: event.clientX - offset.left,
           y: event.clientY - offset.top

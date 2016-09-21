@@ -15,12 +15,12 @@ export class SimpleAnimationComponent implements OnInit {
   @ViewChild('ball') ball;
 
   ngOnInit() {
-    Observable.fromEvent(getSourceElement(), 'click')
+    Observable.fromEvent(document, 'click')
       .map(event => {
-
+        const offset = $(event.target).offset();
         return {
-          x: event.clientX - getOffsetLeft(event, null) - BIG_BALL_OFFSET - CURSOR_OFFSET,
-          y: event.pageY - getOffsetTop(event) - BIG_BALL_OFFSET - CURSOR_OFFSET
+          x: event.clientX - offset.left - BIG_BALL_OFFSET - CURSOR_OFFSET,
+          y: event.pageY - offset.top - BIG_BALL_OFFSET - CURSOR_OFFSET
         };
       })
       .subscribe(props => {

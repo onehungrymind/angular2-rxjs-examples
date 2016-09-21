@@ -12,13 +12,15 @@ import 'rxjs/add/operator/pairwise';
 })
 export class StreamOriginComponent implements OnInit {
   lines: any[] = [];
+  emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
   ngOnInit() {
     // Observable.fromEvent(document, 'mousemove')
-    Observable.fromEvent(getSourceElement(), 'click')
+    Observable.fromEvent(document, 'click')
       .map(event => {
+        const offset = $(event.target).offset();
         return {
-          x: event.clientX - getOffsetLeft(event) - CURSOR_OFFSET,
-          y: event.pageY - getOffsetTop(event) - CURSOR_OFFSET
+          x: event.clientX - offset.left,
+          y: event.pageY - offset.top
         };
       })
       .pairwise(2)

@@ -17,33 +17,20 @@ export class TriggersComponent implements OnInit {
   position: any;
 
   ngOnInit() {
-    // const move$ = Observable.fromEvent(getSourceElement(), 'mousemove')
-    //   .map(event => {
-    //     return {
-    //       x: event.clientX - getOffsetLeft(event) - BIG_BALL_OFFSET,
-    //       y: event.pageY - BIG_BALL_OFFSET
-    //     };
-    //   });
-
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
+        const offset = $(event.target).offset();
         return {
-          x: event.clientX - BIG_BALL_OFFSET,
-          y: event.clientY - BIG_BALL_OFFSET
+          x: event.clientX - offset.left - BIG_BALL_OFFSET,
+          y: event.pageY - BIG_BALL_OFFSET
         };
       });
 
-    // const move$ = Observable.fromEvent(document, 'mousemove')
-    //   .map(event => {
-    //     const offset = $(event.target).offset();
-    //     return {
-    //       x: event.clientX - offset.left - BIG_BALL_OFFSET,
-    //       y: event.pageY - BIG_BALL_OFFSET
-    //     };
-    //   });
+    const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
+      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
 
-    const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown');
-    const up$ = Observable.fromEvent(document, 'mouseup');
+    const up$ = Observable.fromEvent(document, 'mouseup')
+      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
 
     // This implementation uses the async pipe
     // this.position = down$

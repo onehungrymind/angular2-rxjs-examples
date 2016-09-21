@@ -11,6 +11,9 @@ import { Component } from '@angular/core';
   .card-container {
     display: flex;
     flex-flow: row wrap;
+    position: fixed;
+    top: 70px;
+    bottom: 0;
   }
   `],
   template: `

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
+import { SMALL_BALL_OFFSET } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 
@@ -22,15 +23,14 @@ export class GameMasterComponent implements OnInit {
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
-    const BALL_OFFSET = 50;
     const remote$ = this.af.database.object('animation/');
 
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
         const offset = $(event.target).offset();
         return {
-          x: event.clientX - offset.left - BALL_OFFSET,
-          y: event.clientY - offset.top - BALL_OFFSET
+          x: event.clientX - offset.left - SMALL_BALL_OFFSET,
+          y: event.clientY - offset.top - SMALL_BALL_OFFSET
         };
       })
       .do(event => remote$.update(event))
