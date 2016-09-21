@@ -15,6 +15,8 @@ import 'rxjs/add/operator/startWith';
 })
 export class CounterMasterComponent implements OnInit {
   @ViewChild('btn') btn;
+  message: string;
+  message: string;
 
   constructor(private af: AngularFire) {}
 
@@ -22,17 +24,13 @@ export class CounterMasterComponent implements OnInit {
     const remote$ = this.af.database.object('clicker/');
 
     const local$ = Observable.fromEvent(this.getNativeElement(this.btn), 'click')
-      .map(event => {
-        return {
-          timestamp: new Date().toString()
-        }
-      })
+      .startWith({ticker: 1})
+      .scan((acc, curr) => { return { ticker: acc.ticker + 1 }; })
       .subscribe(event => remote$.update(event));
 
     remote$
       .subscribe(result => {
         this.message = result.message;
-        this.timestamp = result.timestamp;
       });
   }
 

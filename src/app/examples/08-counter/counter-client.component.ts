@@ -25,10 +25,7 @@ export class CounterClientComponent implements OnInit {
     const remote$ = this.af.database.object('clicker/');
 
     remote$
-      .mapTo(1)
-      .startWith(0)
-      .scan((acc, curr) => acc + curr)
-      .subscribe(result => this.count = result)
+      .subscribe(result => this.count = result.ticker)
     ;
   }
 }
