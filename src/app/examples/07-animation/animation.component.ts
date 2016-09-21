@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { SMALL_BALL_OFFSET, getOffsetLeft, getSourceElement } from '../../shared';
+import { SMALL_BALL_OFFSET } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 

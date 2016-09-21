@@ -25,8 +25,6 @@ export class AnnotateMasterComponent implements OnInit {
     Observable.fromEvent(document, 'mousemove')
       .map(event => {
         const offset = $(event.target).offset();
-        console.log('TARGET: ', event.target);
-        console.log('OFFSET: ', $(event.target).offset());
 
         return {
           x: event.clientX - offset.left,

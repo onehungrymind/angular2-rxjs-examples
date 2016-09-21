@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BIG_BALL_OFFSET, CURSOR_OFFSET, getOffsetLeft, getOffsetTop, getSourceElement } from '../../shared';
+import { BIG_BALL_OFFSET, CURSOR_OFFSET } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'gsap';
