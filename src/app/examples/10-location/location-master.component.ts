@@ -27,7 +27,7 @@ export class LocationMasterComponent implements OnInit {
     const remote$ = this.af.database.object('location/');
 
     const move$ = Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
 
         return {
@@ -37,15 +37,15 @@ export class LocationMasterComponent implements OnInit {
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
+      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'none');
 
     const up$ = Observable.fromEvent(document, 'mouseup')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
+      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'all');
 
     down$
-      .switchMap(event => move$.takeUntil(up$))
+      .switchMap((event: any) => move$.takeUntil(up$))
       .startWith({ x: 100, y: 100})
-      .do(event => remote$.update(event))
+      .do((event: any) => remote$.update(event))
       .subscribe(event => this.position = event);
   }
 }

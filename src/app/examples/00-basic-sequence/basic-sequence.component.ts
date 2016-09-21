@@ -7,8 +7,12 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-basic-sequence',
-  templateUrl: './basic-sequence.component.html',
-  styleUrls: ['./basic-sequence.component.css']
+  template: `
+  <button #btn md-raised-button color="accent">Click me!</button>
+  <div class="container">
+    <h1>{{message}}</h1>
+  </div>
+  `
 })
 export class BasicSequenceComponent implements OnInit {
   @ViewChild('btn') btn;

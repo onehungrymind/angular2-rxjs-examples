@@ -6,15 +6,22 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-animation',
-  templateUrl: './animation.component.html',
-  styleUrls: ['./animation.component.css']
+  template: `
+  <div class="container">
+    <app-circle
+      *ngFor="let circle of circles"
+      [style.left]="circle.x + 'px'"
+      [style.top]="circle.y + 'px'">
+    </app-circle>
+  </div>
+  `
 })
 export class AnimationComponent implements OnInit {
   circles: any[] = [];
 
   ngOnInit() {
     Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - SMALL_BALL_OFFSET,

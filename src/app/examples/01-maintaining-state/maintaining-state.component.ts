@@ -7,8 +7,15 @@ import 'rxjs/add/operator/startWith';
 
 @Component({
   selector: 'app-maintaining-state',
-  templateUrl: './maintaining-state.component.html',
-  styleUrls: ['./maintaining-state.component.css']
+  template: `
+  <button #right md-raised-button color="accent">Move Right</button>
+  <div class="container">
+    <div #ball class="ball"
+      [style.left]="position.x + 'px'"
+      [style.top]="position.y + 'px'">
+    </div>
+  </div>
+  `
 })
 export class MaintainingStateComponent implements OnInit {
   @ViewChild('left') left;

@@ -16,7 +16,6 @@ import 'rxjs/add/operator/startWith';
 export class CounterMasterComponent implements OnInit {
   @ViewChild('btn') btn;
   message: string;
-  message: string;
 
   constructor(private af: AngularFire) {}
 
@@ -25,8 +24,8 @@ export class CounterMasterComponent implements OnInit {
 
     const local$ = Observable.fromEvent(this.getNativeElement(this.btn), 'click')
       .startWith({ticker: 1})
-      .scan((acc, curr) => { return { ticker: acc.ticker + 1 }; })
-      .subscribe(event => remote$.update(event));
+      .scan((acc: any, curr: any) => { return { ticker: acc.ticker + 1 }; })
+      .subscribe((event:any) => remote$.update(event));
 
     remote$
       .subscribe(result => {

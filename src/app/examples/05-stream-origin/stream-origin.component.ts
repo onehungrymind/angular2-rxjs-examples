@@ -6,8 +6,13 @@ import 'rxjs/add/operator/pairwise';
 
 @Component({
   selector: 'app-stream-origin',
-  templateUrl: './stream-origin.component.html',
-  styleUrls: ['./stream-origin.component.css']
+  template: `
+  <!-- Empty line to start the offset positioning properly -->
+  <app-line [line]="emptyLine"></app-line>
+  <app-line
+    *ngFor="let line of lines" [line]="line">
+  </app-line>
+  `
 })
 export class StreamOriginComponent implements OnInit {
   lines: any[] = [];
@@ -15,7 +20,7 @@ export class StreamOriginComponent implements OnInit {
   ngOnInit() {
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left,

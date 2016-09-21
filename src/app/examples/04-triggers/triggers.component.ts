@@ -9,8 +9,12 @@ import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-triggers',
-  templateUrl: './triggers.component.html',
-  styleUrls: ['./triggers.component.css']
+  template: `
+  <div #ball class="ball"
+    [style.left]="position.x + 'px'"
+    [style.top]="position.y + 'px'">
+  </div>
+  `
 })
 export class TriggersComponent implements OnInit {
   @ViewChild('ball') ball;
@@ -18,7 +22,7 @@ export class TriggersComponent implements OnInit {
 
   ngOnInit() {
     const move$ = Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - BIG_BALL_OFFSET,
@@ -27,15 +31,10 @@ export class TriggersComponent implements OnInit {
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
+      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'none');
 
     const up$ = Observable.fromEvent(document, 'mouseup')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
-
-    // This implementation uses the async pipe
-    // this.position = down$
-    //   .switchMap(event => move$.takeUntil(up$))
-    //   .startWith({ x: 100, y: 100});
+      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'all');
 
     down$
       .switchMap(event => move$.takeUntil(up$))

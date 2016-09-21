@@ -8,8 +8,16 @@ import 'rxjs/add/operator/startWith';
 
 @Component({
   selector: 'app-merging-streams',
-  templateUrl: './merging-streams.component.html',
-  styleUrls: ['./merging-streams.component.css']
+  template: `
+  <button #left md-raised-button color="accent">Move Left</button>
+  <button #right md-raised-button color="accent">Move Right</button>
+  <div class="container">
+    <div #ball class="ball"
+      [style.left]="position.x + 'px'"
+      [style.top]="position.y + 'px'">
+    </div>
+  </div>
+  `
 })
 export class MergingStreamsComponent implements OnInit {
   @ViewChild('left') left;

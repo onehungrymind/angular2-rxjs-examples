@@ -26,14 +26,14 @@ export class GameMasterComponent implements OnInit {
     const remote$ = this.af.database.object('animation/');
 
     Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - SMALL_BALL_OFFSET,
           y: event.clientY - offset.top - SMALL_BALL_OFFSET
         };
       })
-      .do(event => remote$.update(event))
+      .do((event: any) => remote$.update(event))
       .subscribe(circle => {
         this.circles = [...this.circles, circle];
       });

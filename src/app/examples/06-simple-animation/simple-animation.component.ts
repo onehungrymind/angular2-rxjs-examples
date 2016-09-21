@@ -7,8 +7,7 @@ import 'gsap';
 
 @Component({
   selector: 'app-simple-animation',
-  templateUrl: './simple-animation.component.html',
-  styleUrls: ['./simple-animation.component.css']
+  template: `<div #ball class="ball"></div>`
 })
 export class SimpleAnimationComponent implements OnInit {
 
@@ -16,7 +15,7 @@ export class SimpleAnimationComponent implements OnInit {
 
   ngOnInit() {
     Observable.fromEvent(document, 'click')
-      .map(event => {
+      .map((event: any) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - BIG_BALL_OFFSET - CURSOR_OFFSET,
