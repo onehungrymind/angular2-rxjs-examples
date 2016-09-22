@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BIG_BALL_OFFSET } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
@@ -21,12 +20,14 @@ export class TriggersComponent implements OnInit {
   position: any;
 
   ngOnInit() {
+    const BALL_OFFSET = 50;
+
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map(event => {
         const offset = $(event.target).offset();
         return {
-          x: event.clientX - offset.left - BIG_BALL_OFFSET,
-          y: event.pageY - BIG_BALL_OFFSET
+          x: event.clientX - offset.left - BALL_OFFSET,
+          y: event.pageY - BALL_OFFSET
         };
       });
 
