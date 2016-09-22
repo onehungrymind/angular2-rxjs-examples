@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFire } from 'angularfire2';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
@@ -15,22 +14,19 @@ import 'rxjs/add/operator/startWith';
 })
 export class CounterMasterComponent implements OnInit {
   @ViewChild('btn') btn;
-  message: string;
 
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
     const remote$ = this.af.database.object('clicker/');
 
-    const local$ = Observable.fromEvent(this.getNativeElement(this.btn), 'click')
-      .startWith({ticker: 1})
-      .scan((acc: any, curr: any) => { return { ticker: acc.ticker + 1 }; })
-      .subscribe((event:any) => remote$.update(event));
+    Observable.fromEvent(this.getNativeElement(this.btn), 'click')
+      .startWith({ticker: 0})
+      .scan((acc, curr) => { return { ticker: acc.ticker + 1 }; })
+      .subscribe(event => remote$.update(event));
 
     remote$
-      .subscribe(result => {
-        this.message = result.message;
-      });
+      .subscribe(result => this.message = result.message);
   }
 
   getNativeElement(element) {

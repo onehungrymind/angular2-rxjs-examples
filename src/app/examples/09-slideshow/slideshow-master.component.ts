@@ -43,10 +43,7 @@ export class SlideshowMasterComponent implements OnInit {
 
         return {index: adjustedIndex, direction: curr.direction};
       })
-      .do(event => remote$.update(event))
-      .subscribe(result => {
-        this.position = result;
-      });
+      .subscribe(event => remote$.update(event));
   }
 
   getNativeElement(element) {

@@ -1,11 +1,6 @@
 import { Component, OnInit,  trigger, style, transition, animate } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { images } from './images';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/startWith';
 
 @Component({

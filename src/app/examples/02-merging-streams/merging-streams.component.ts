@@ -34,9 +34,7 @@ export class MergingStreamsComponent implements OnInit {
     Observable.merge(left$, right$)
       .startWith({x: 100, y: 150})
       .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
-      .subscribe(result => {
-        this.position = result;
-      });
+      .subscribe(position => this.position = position);
   }
 
   getNativeElement(element) {

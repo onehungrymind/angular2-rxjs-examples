@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BIG_BALL_OFFSET, CURSOR_OFFSET } from '../../shared';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 import 'gsap';
@@ -14,17 +13,17 @@ export class SimpleAnimationComponent implements OnInit {
   @ViewChild('ball') ball;
 
   ngOnInit() {
+    const BALL_OFFSET = 50;
+    const CURSOR_OFFSET = 20;
+
     Observable.fromEvent(document, 'click')
       .map((event: any) => {
         const offset = $(event.target).offset();
         return {
-          x: event.clientX - offset.left - BIG_BALL_OFFSET - CURSOR_OFFSET,
-          y: event.pageY - offset.top - BIG_BALL_OFFSET - CURSOR_OFFSET
+          x: event.clientX - offset.left - BALL_OFFSET - CURSOR_OFFSET,
+          y: event.pageY - offset.top - BALL_OFFSET - CURSOR_OFFSET
         };
       })
-      .subscribe(props => {
-        TweenMax.to(this.ball.nativeElement, 1, props);
-      })
+      .subscribe(props => TweenMax.to(this.ball.nativeElement, 1, props))
   }
-
 }

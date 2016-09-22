@@ -22,27 +22,25 @@ export class MapToFunctionsComponent implements OnInit {
 
   ngOnInit() {
     const leftArrow$ = Observable.fromEvent(document, 'keydown')
-      .filter((event: any) => event.key === 'ArrowLeft')
+      .filter(event => event.key === 'ArrowLeft')
       .mapTo(position => this.decrement(position, 'x', 10));
 
     const rightArrow$ = Observable.fromEvent(document, 'keydown')
-      .filter((event: any) => event.key === 'ArrowRight')
+      .filter(event => event.key === 'ArrowRight')
       .mapTo(position => this.increment(position, 'x', 10));
 
     const upArrow$ = Observable.fromEvent(document, 'keydown')
-      .filter((event: any) => event.key === 'ArrowUp')
+      .filter(event => event.key === 'ArrowUp')
       .mapTo(position => this.decrement(position, 'y', 10));
 
     const downArrow$ = Observable.fromEvent(document, 'keydown')
-      .filter((event: any) => event.key === 'ArrowDown')
+      .filter(event => event.key === 'ArrowDown')
       .mapTo(position => this.increment(position, 'y', 10));
 
     Observable.merge(leftArrow$, rightArrow$, upArrow$, downArrow$)
       .startWith({x: 100, y: 100})
       .scan((acc, curr) => curr(acc))
-      .subscribe(result => {
-        this.position = result;
-      });
+      .subscribe(position => this.position = position);
   }
 
   increment(obj, prop, value) {

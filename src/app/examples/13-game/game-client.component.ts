@@ -23,9 +23,8 @@ export class GameClientComponent implements OnInit {
 
   ngOnInit() {
     const remote$ = this.af.database.object('animation/');
+
     remote$
-      .subscribe(circle => {
-        this.circles = [...this.circles, circle];
-      });
+      .subscribe(circle => this.circles = [...this.circles, circle]);
   }
 }

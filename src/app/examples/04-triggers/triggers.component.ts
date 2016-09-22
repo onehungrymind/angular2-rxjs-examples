@@ -22,7 +22,7 @@ export class TriggersComponent implements OnInit {
 
   ngOnInit() {
     const move$ = Observable.fromEvent(document, 'mousemove')
-      .map((event: any) => {
+      .map(event => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - BIG_BALL_OFFSET,
@@ -31,16 +31,14 @@ export class TriggersComponent implements OnInit {
       });
 
     const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
-      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'none');
+      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
 
     const up$ = Observable.fromEvent(document, 'mouseup')
-      .do((event: any) => this.ball.nativeElement.style.pointerEvents = 'all');
+      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
 
     down$
       .switchMap(event => move$.takeUntil(up$))
       .startWith({ x: 100, y: 100})
-      .subscribe(result => {
-        this.position = result;
-      });
+      .subscribe(position => this.position = position);
   }
 }

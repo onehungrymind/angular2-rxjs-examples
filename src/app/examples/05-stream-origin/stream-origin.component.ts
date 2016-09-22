@@ -7,8 +7,6 @@ import 'rxjs/add/operator/pairwise';
 @Component({
   selector: 'app-stream-origin',
   template: `
-  <!-- Empty line to start the offset positioning properly -->
-  <app-line [line]="emptyLine"></app-line>
   <app-line
     *ngFor="let line of lines" [line]="line">
   </app-line>
@@ -16,8 +14,9 @@ import 'rxjs/add/operator/pairwise';
 })
 export class StreamOriginComponent implements OnInit {
   lines: any[] = [];
-  emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
   ngOnInit() {
+    const emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
+
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
       .map((event: any) => {
@@ -33,8 +32,7 @@ export class StreamOriginComponent implements OnInit {
         const p2 = positions[1];
         return { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y };
       })
-      .subscribe(line => {
-        this.lines = [...this.lines, line];
-      });
+      .startWith(emptyLine)
+      .subscribe(line => this.lines = [...this.lines, line]);
   }
 }

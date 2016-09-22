@@ -18,7 +18,6 @@ import 'rxjs/add/operator/startWith';
   `
 })
 export class MaintainingStateComponent implements OnInit {
-  @ViewChild('left') left;
   @ViewChild('right') right;
   position: any;
 
@@ -27,9 +26,7 @@ export class MaintainingStateComponent implements OnInit {
       .map(event => 10)
       .startWith({x: 100, y: 150})
       .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
-      .subscribe(result => {
-        this.position = result;
-      });
+      .subscribe(position => this.position = position);
   }
 
   getNativeElement(element) {

@@ -1,11 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { AngularFire } from 'angularfire2';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/startWith';
 
 @Component({
   selector: 'app-counter-client',

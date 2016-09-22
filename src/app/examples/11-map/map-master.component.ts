@@ -10,7 +10,6 @@ declare var jQuery:any;
 @Component({
   selector: 'app-map-master',
   template: `
-  <app-line [line]="emptyLine"></app-line>
   <app-line
     *ngFor="let line of lines" [line]="line">
   </app-line>
@@ -18,15 +17,15 @@ declare var jQuery:any;
 })
 export class MapMasterComponent implements OnInit {
   lines: any[] = [];
-  emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
-  constructor(private af: AngularFire, private elementRef:ElementRef) {}
+  constructor(private af: AngularFire) {}
 
   ngOnInit() {
     const remote$ = this.af.database.object('map/');
+    const emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
     Observable.fromEvent(document, 'click')
-      .map((event: any) => {
+      .map(event => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left,
@@ -39,9 +38,10 @@ export class MapMasterComponent implements OnInit {
         const p2 = positions[1];
         return { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y };
       })
-      .do((event: any) => remote$.update(event))
-      .subscribe(line => {
-        this.lines = [...this.lines, line];
-      });
+      .startWith(emptyLine)
+      .subscribe(line => remote$.update(line));
+
+    remote$
+      .subscribe(line => this.lines = [...this.lines, line]);
   }
 }

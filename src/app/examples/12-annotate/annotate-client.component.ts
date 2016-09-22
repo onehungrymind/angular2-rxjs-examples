@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/pairwise';
 
 @Component({
   selector: 'app-annotate-client',
@@ -24,8 +20,6 @@ export class AnnotateClientComponent implements OnInit {
     const remote$ = this.af.database.object('annotate/');
 
     remote$
-      .subscribe(line => {
-        this.lines = [...this.lines, line];
-      });
+      .subscribe(line => this.lines = [...this.lines, line]);
   }
 }
