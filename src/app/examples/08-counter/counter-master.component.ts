@@ -24,9 +24,6 @@ export class CounterMasterComponent implements OnInit {
       .startWith({ticker: 0})
       .scan((acc, curr) => { return { ticker: acc.ticker + 1 }; })
       .subscribe(event => remote$.update(event));
-
-    remote$
-      .subscribe(result => this.message = result.message);
   }
 
   getNativeElement(element) {

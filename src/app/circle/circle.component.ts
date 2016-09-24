@@ -3,8 +3,7 @@ import 'gsap';
 
 @Component({
   selector: 'app-circle',
-  templateUrl: './circle.component.html',
-  styleUrls: ['./circle.component.css']
+  template: `<div #circle class="circle"></div>`
 })
 export class CircleComponent implements OnInit {
   @ViewChild('circle') circle;
