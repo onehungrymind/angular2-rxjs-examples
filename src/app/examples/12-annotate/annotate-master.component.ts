@@ -23,7 +23,7 @@ export class AnnotateMasterComponent implements OnInit {
     const emptyLine: any = { x1: 0, y1: 0, x2: 0, y2: 0 };
 
     Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
 
         return {
@@ -31,7 +31,7 @@ export class AnnotateMasterComponent implements OnInit {
           y: event.clientY - offset.top
         };
       })
-      .pairwise(2)
+      .pairwise()
       .map(positions => {
         const p1 = positions[0];
         const p2 = positions[1];

@@ -6,6 +6,10 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
+interface Ticker {
+  ticker: number
+}
+
 @Component({
   selector: 'app-counter-master',
   template: `
@@ -22,7 +26,7 @@ export class CounterMasterComponent implements OnInit {
 
     Observable.fromEvent(this.getNativeElement(this.btn), 'click')
       .startWith({ticker: 0})
-      .scan((acc, curr) => { return { ticker: acc.ticker + 1 }; })
+      .scan((acc: Ticker, curr) => { return { ticker: acc.ticker + 1 }; })
       .subscribe(event => remote$.update(event));
   }
 

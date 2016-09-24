@@ -22,7 +22,7 @@ export class AnimationComponent implements OnInit {
     const BALL_OFFSET = 25;
 
     Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - BALL_OFFSET,

@@ -26,7 +26,7 @@ export class GameMasterComponent implements OnInit {
     const BALL_OFFSET = 25;
 
     Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
 
         return {
@@ -37,6 +37,6 @@ export class GameMasterComponent implements OnInit {
       .subscribe(event => remote$.update(event));
 
     remote$
-      .subscribe(circle => this.circles = [...this.circles, circle]);    
+      .subscribe(circle => this.circles = [...this.circles, circle]);
   }
 }

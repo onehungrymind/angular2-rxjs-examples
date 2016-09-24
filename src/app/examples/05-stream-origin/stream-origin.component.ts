@@ -19,14 +19,14 @@ export class StreamOriginComponent implements OnInit {
 
     // Observable.fromEvent(document, 'mousemove')
     Observable.fromEvent(document, 'click')
-      .map((event: any) => {
+      .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left,
           y: event.pageY - offset.top
         };
       })
-      .pairwise(2)
+      .pairwise()
       .map(positions => {
         const p1 = positions[0];
         const p2 = positions[1];

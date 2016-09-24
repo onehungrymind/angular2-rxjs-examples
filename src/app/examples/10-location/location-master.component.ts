@@ -26,7 +26,7 @@ export class LocationMasterComponent implements OnInit {
     const remote$ = this.af.database.object('location/');
     const BALL_OFFSET = 50;
     const move$ = Observable.fromEvent(document, 'mousemove')
-      .map(event => {
+      .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
         return {
           x: event.clientX - offset.left - BALL_OFFSET,

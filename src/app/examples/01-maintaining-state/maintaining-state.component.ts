@@ -5,6 +5,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/startWith';
 
+interface Coordinate {
+  x: number,
+  y: number
+}
+
 @Component({
   selector: 'app-maintaining-state',
   template: `
@@ -24,8 +29,8 @@ export class MaintainingStateComponent implements OnInit {
   ngOnInit() {
     Observable.fromEvent(this.getNativeElement(this.right), 'click')
       .map(event => 10)
+      .scan((acc: Coordinate, curr) => Object.assign({}, acc, {x: acc.x + curr}))
       .startWith({x: 100, y: 150})
-      .scan((acc, curr) => Object.assign({}, acc, {x: acc.x + curr}))
       .subscribe(position => this.position = position);
   }
 
