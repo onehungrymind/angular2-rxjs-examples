@@ -10,35 +10,37 @@ import 'rxjs/add/operator/startWith';
 @Component({
   selector: 'app-location-master',
   template: `
-    <div #ball class="ball"
+    <div #pin class="pin"
       [style.left]="position.x + 'px'"
       [style.top]="position.y + 'px'">
     </div>
   `
 })
 export class LocationMasterComponent implements OnInit {
-  @ViewChild('ball') ball;
+  @ViewChild('pin') pin;
   position: any;
 
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('location/');
-    const BALL_OFFSET = 50;
+    const remote$ = this.af.database.object('location/'),
+      PIN_OFFSET_X = 26,
+      PIN_OFFSET_Y = 16;
+
     const move$ = Observable.fromEvent(document, 'mousemove')
       .map((event: MouseEvent) => {
         const offset = $(event.target).offset();
         return {
-          x: event.clientX - offset.left - BALL_OFFSET,
-          y: event.clientY - offset.top - BALL_OFFSET
+          x: event.clientX - offset.left - PIN_OFFSET_X,
+          y: event.clientY - offset.top - PIN_OFFSET_Y
         };
       });
 
-    const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
+    const down$ = Observable.fromEvent(this.pin.nativeElement, 'mousedown')
+      .do(event => this.pin.nativeElement.style.pointerEvents = 'none');
 
     const up$ = Observable.fromEvent(document, 'mouseup')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
+      .do(event => this.pin.nativeElement.style.pointerEvents = 'all');
 
     down$
       .switchMap(event => move$.takeUntil(up$))

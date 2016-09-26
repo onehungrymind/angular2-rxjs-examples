@@ -7,11 +7,14 @@ import { Component } from '@angular/core';
       position:fixed;
       top: 70px;
       bottom: 0;
+      left: 0;
+      right: 0;
     }
     md-card {
-      width: 400px;
+      width: 100%;
       box-sizing: border-box;
       margin: 16px;
+      background: #fff url(assets/london-map.jpg) no-repeat center center;
     }
     .card-container {
       display: flex;

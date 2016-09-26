@@ -9,6 +9,14 @@ body {
     position: absolute;
     background-image: radial-gradient(orange, red);
 }
+.pin {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background: transparent url('assets/pin.png') no-repeat;
+  background-size: contain;
+}
 .circle {
     border-radius: 50%;
     width: 50px;

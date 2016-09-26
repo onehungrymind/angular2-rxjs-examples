@@ -10,7 +10,7 @@ import 'rxjs/add/operator/startWith';
 @Component({
   selector: 'app-location-client',
   template: `
-    <div #ball class="ball"
+    <div #pin class="pin"
       [style.left]="position.x + 'px'"
       [style.top]="position.y + 'px'">
     </div>
