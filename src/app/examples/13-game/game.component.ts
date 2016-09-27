@@ -15,7 +15,6 @@ import 'rxjs/add/operator/repeat';
     background: white url('assets/stars.jpg') repeat-y 0 0;
     background-size: cover;
     overflow: hidden;
-    /*transition: background 100ms linear;*/
   }
   .card-container {
     display: flex;
