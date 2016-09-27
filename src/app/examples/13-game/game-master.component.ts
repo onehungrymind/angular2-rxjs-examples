@@ -15,7 +15,7 @@ const SPACESHIP_OFFSET = 40,
       [style.top]="spaceshipPosition.y + 'px'">
     </div>
     <app-shot *ngFor="let shot of shots"
-      (remove)="removeShotFromDom(shot)"
+      (remove)="removeShot(shot)"
       [style.left]="shot?.x + 'px'"
       [style.top]="shot?.y + 'px'"
     ></app-shot>
@@ -65,7 +65,7 @@ export class GameMasterComponent implements OnInit {
     };
   }
 
-  removeShotFromDom(shot) {
+  removeShot(shot) {
     if (shot) {
       this.shots$.remove(shot.$key);
     }

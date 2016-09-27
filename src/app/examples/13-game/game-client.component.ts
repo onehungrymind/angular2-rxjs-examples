@@ -11,7 +11,6 @@ import 'rxjs/add/operator/map';
       [style.top]="spaceshipPosition.y + 'px'">
     </div>
     <app-shot *ngFor="let shot of shots"
-      (remove)="removeShotFromDom()"
       [style.left]="shot?.x + 'px'"
       [style.top]="shot?.y + 'px'"
     ></app-shot>
@@ -38,9 +37,5 @@ export class GameClientComponent implements OnInit {
 
     spaceship$
       .subscribe(position => this.spaceshipPosition = position);
-  }
-
-  removeShotFromDom() {
-    this.shots.shift();
   }
 }
