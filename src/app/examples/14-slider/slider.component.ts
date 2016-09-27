@@ -24,4 +24,4 @@ import { Component } from '@angular/core';
   </div>
   `
 })
-export class SliderComponent { }
+export class SliderComponent{}

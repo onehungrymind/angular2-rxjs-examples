@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/timeInterval';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/repeat';
 
 @Component({
   selector: 'app-game',
@@ -7,9 +12,10 @@ import { Component } from '@angular/core';
     width: 400px;
     box-sizing: border-box;
     margin: 16px;
-    background: white url('assets/stars.jpg') repeat-y top left;
+    background: white url('assets/stars.jpg') repeat-y 0 0;
     background-size: cover;
     overflow: hidden;
+    /*transition: background 100ms linear;*/
   }
   .card-container {
     display: flex;
@@ -21,13 +27,23 @@ import { Component } from '@angular/core';
   `],
   template: `
   <div class="card-container">
-      <md-card>
+      <md-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-master></app-game-master>
       </md-card>
-      <md-card>
+      <md-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-client></app-game-client>
       </md-card>
   </div>
   `
 })
-export class GameComponent { }
+export class GameComponent implements OnInit{
+  backgroundPosition: number = 0;
+  ngOnInit() {
+    Observable
+      .interval(10)
+      .startWith(1100)
+      .take(1178)
+      .repeat()
+      .subscribe(count => this.backgroundPosition = count);
+  }
+}

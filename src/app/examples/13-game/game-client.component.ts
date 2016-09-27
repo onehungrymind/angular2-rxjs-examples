@@ -28,7 +28,13 @@ export class GameClientComponent implements OnInit {
       shots$ = this.af.database.list('shots/');
 
     shots$
-      .subscribe(shots => this.shots.push(shots[shots.length - 1]));
+      .subscribe(shots => {
+        if (shots.length && this.shots.length < shots.length) {
+          this.shots.push(shots[shots.length - 1])
+        } else {
+          this.shots.shift();
+        }
+      });
 
     spaceship$
       .subscribe(position => this.spaceshipPosition = position);
