@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 
-const SPACESHIP_OFFSET = 50,
+const SPACESHIP_OFFSET = 40,
   SHOT_OFFSET = 2;
 
 @Component({
@@ -43,7 +43,9 @@ export class GameMasterComponent implements OnInit {
       .subscribe(event => spaceship$.update(event));
 
     shots$
-      .subscribe(shots => this.shots.push(shots[shots.length - 1]));
+      .subscribe(shots => {
+        this.shots.push(shots[0])
+      });
 
     spaceship$
       .subscribe(event => this.spaceshipPosition = event);

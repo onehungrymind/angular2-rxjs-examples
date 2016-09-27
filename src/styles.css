@@ -35,7 +35,7 @@ body {
   bottom: -50px;
   opacity: 0.3;
   transform: rotateZ(285deg);
-  left: 36px;
+  left: 27px;
 
   animation: smoke 2s infinite;
 }
