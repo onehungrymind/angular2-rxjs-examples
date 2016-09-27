@@ -17,6 +17,41 @@ body {
   background: transparent url('assets/pin.png') no-repeat;
   background-size: contain;
 }
+.spaceship {
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background: transparent url('assets/spaceship.png') no-repeat;
+  background-size: contain;
+}
+.spaceship:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: transparent url(assets/exhaust.png) no-repeat;
+  background-size: contain;
+  bottom: -50px;
+  opacity: 0.3;
+  transform: rotateZ(285deg);
+  left: 36px;
+
+  animation: smoke 2s infinite;
+}
+@keyframes smoke {
+  0% {
+    opacity: .1;
+  }
+
+  50% {
+    opacity: .2;
+  }
+
+  100% {
+    opacity: .1;
+  }
+}
 .circle {
     border-radius: 50%;
     width: 50px;
@@ -27,4 +62,7 @@ body {
 }
 app-circle {
     position: absolute;
+}
+app-shot {
+  position: absolute;
 }

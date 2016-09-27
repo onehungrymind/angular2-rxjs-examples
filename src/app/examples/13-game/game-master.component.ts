@@ -4,39 +4,64 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 
+const SPACESHIP_OFFSET = 50,
+  SHOT_OFFSET = 2;
+
 @Component({
   selector: 'app-game-master',
   template: `
-  <div class="container">
-    <app-circle
-      *ngFor="let circle of circles"
-      [style.left]="circle.x + 'px'"
-      [style.top]="circle.y + 'px'">
-    </app-circle>
-  </div>
+    <div #spaceship class="spaceship"
+      [style.left]="spaceshipPosition.x + 'px'"
+      [style.top]="spaceshipPosition.y + 'px'">
+    </div>
+    <app-shot *ngFor="let shot of shots"
+      (remove)="removeShotFromDom(shot)"
+      [style.left]="shot?.x + 'px'"
+      [style.top]="shot?.y + 'px'"
+    ></app-shot>
   `
 })
 export class GameMasterComponent implements OnInit {
-  circles: any[] = [];
+  spaceshipPosition: Object = {};
+  shots: any[] = [];
+  shots$: any;
 
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('animation/');
-    const BALL_OFFSET = 25;
+    const spaceship$ = this.af.database.object('spaceship/'),
+      shots$ = this.af.database.list('shots/');
+
+    this.shots$ = shots$;
+
+    Observable.fromEvent(document, 'click')
+      .map(this.parseEvent)
+      .subscribe(shot => shots$.push(shot));
 
     Observable.fromEvent(document, 'mousemove')
-      .map((event: MouseEvent) => {
-        const offset = $(event.target).offset();
+      .map(this.parseEvent)
+      .subscribe(event => spaceship$.update(event));
 
-        return {
-          x: event.clientX - offset.left - BALL_OFFSET,
-          y: event.clientY - offset.top - BALL_OFFSET
-        };
-      })
-      .subscribe(event => remote$.update(event));
+    shots$
+      .subscribe(shots => this.shots.push(shots[shots.length - 1]));
 
-    remote$
-      .subscribe(circle => this.circles = [...this.circles, circle]);
+    spaceship$
+      .subscribe(event => this.spaceshipPosition = event);
+  }
+
+  parseEvent(event) {
+    const offset = $(event.target).offset(),
+      typeOfOffsetLeft = event.type === 'click' ? SHOT_OFFSET : SPACESHIP_OFFSET;
+
+    return {
+      x: event.clientX - offset.left - typeOfOffsetLeft,
+      y: event.clientY - offset.top - SPACESHIP_OFFSET
+    };
+  }
+
+  removeShotFromDom(shot) {
+    if (shot) {
+      this.shots$.remove(shot.$key);
+    }
   }
 }

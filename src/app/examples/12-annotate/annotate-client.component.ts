@@ -4,11 +4,10 @@ import { AngularFire } from 'angularfire2';
 @Component({
   selector: 'app-annotate-client',
   template: `
-  <div class="container">
     <app-line
       *ngFor="let line of lines" [line]="line">
     </app-line>
-  </div>
+    <app-doc></app-doc>
   `
 })
 export class AnnotateClientComponent implements OnInit {

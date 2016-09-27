@@ -11,6 +11,7 @@ import 'rxjs/add/operator/pairwise';
     <app-line
       *ngFor="let line of lines" [line]="line">
     </app-line>
+    <app-doc></app-doc>
   `
 })
 export class AnnotateMasterComponent implements OnInit {

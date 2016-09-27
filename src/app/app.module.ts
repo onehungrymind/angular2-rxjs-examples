@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { CircleComponent } from './circle/circle.component';
 import { LineComponent } from './line/line.component';
+import { ShotComponent } from './shot/shot.component';
 
 
 import {
@@ -43,6 +44,7 @@ import {
   AnnotateComponent,
   AnnotateClientComponent,
   AnnotateMasterComponent,
+  DocComponent,
   GameComponent,
   GameClientComponent,
   GameMasterComponent,
@@ -63,6 +65,7 @@ export const firebaseConfig = {
     AppComponent,
     CircleComponent,
     LineComponent,
+    ShotComponent,
     BasicSequenceComponent,
     BasicSequenceComponent,
     MaintainingStateComponent,
@@ -87,6 +90,7 @@ export const firebaseConfig = {
     AnnotateComponent,
     AnnotateClientComponent,
     AnnotateMasterComponent,
+    DocComponent,
     GameComponent,
     GameClientComponent,
     GameMasterComponent,

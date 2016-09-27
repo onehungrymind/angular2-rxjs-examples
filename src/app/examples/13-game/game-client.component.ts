@@ -1,30 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFire } from 'angularfire2';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-game-client',
   template: `
-  <div class="container">
-    <app-circle
-      *ngFor="let circle of circles"
-      [style.left]="circle.x + 'px'"
-      [style.top]="circle.y + 'px'">
-    </app-circle>
-  </div>
+    <div #spaceship class="spaceship"
+      [style.left]="spaceshipPosition.x + 'px'"
+      [style.top]="spaceshipPosition.y + 'px'">
+    </div>
+    <app-shot *ngFor="let shot of shots"
+      (remove)="removeShotFromDom()"
+      [style.left]="shot?.x + 'px'"
+      [style.top]="shot?.y + 'px'"
+    ></app-shot>
   `
 })
 export class GameClientComponent implements OnInit {
-  circles: any[] = [];
+  spaceshipPosition: Object = {};
+  shots: any[] = [];
 
   constructor(private af: AngularFire) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('animation/');
+    const spaceship$ = this.af.database.object('spaceship/'),
+      shots$ = this.af.database.list('shots/');
 
-    remote$
-      .subscribe(circle => this.circles = [...this.circles, circle]);
+    shots$
+      .subscribe(shots => this.shots.push(shots[shots.length - 1]));
+
+    spaceship$
+      .subscribe(position => this.spaceshipPosition = position);
+  }
+
+  removeShotFromDom() {
+    this.shots.shift();
   }
 }

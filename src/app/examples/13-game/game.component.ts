@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
     width: 400px;
     box-sizing: border-box;
     margin: 16px;
+    background: white url('assets/stars.jpg') repeat-y top left;
+    background-size: cover;
+    overflow: hidden;
   }
   .card-container {
     display: flex;

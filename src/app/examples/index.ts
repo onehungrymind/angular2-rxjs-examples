@@ -26,6 +26,7 @@ export { MapMasterComponent } from "./11-map/map-master.component";
 export { AnnotateComponent } from "./12-annotate/annotate.component";
 export { AnnotateClientComponent } from "./12-annotate/annotate-client.component";
 export { AnnotateMasterComponent } from "./12-annotate/annotate-master.component";
+export { DocComponent } from "./12-annotate/doc.component";
 
 export { GameComponent } from "./13-game/game.component";
 export { GameClientComponent } from "./13-game/game-client.component";
