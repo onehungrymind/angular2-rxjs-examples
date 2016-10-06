@@ -8,6 +8,9 @@
 /node_modules
 /bower_components
 
+# firebase config
+/src/app/firebase.conf.ts
+
 # IDEs and editors
 /.idea
 .project
