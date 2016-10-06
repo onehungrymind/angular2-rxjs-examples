@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AngularFireModule } from 'angularfire2';
 import * as firebase from 'firebase';
+import { firebaseConfig } from './firebase.conf';
 
 import { MdButtonModule } from '@angular2-material/button';
 import { MdCardModule } from '@angular2-material/card';
@@ -52,13 +53,6 @@ import {
   SliderClientComponent,
   SliderMasterComponent
 } from './examples';
-
-export const firebaseConfig = {
-  apiKey: 'AIzaSyCCaWqJfZuHmVAc7ICV4XA4v_q1fJFkFmM',
-  authDomain: 'rxjsbeastmode.firebaseapp.com',
-  databaseURL: 'https://rxjsbeastmode.firebaseio.com',
-  storageBucket: ''
-};
 
 @NgModule({
   declarations: [
