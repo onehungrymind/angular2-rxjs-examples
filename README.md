@@ -1,6 +1,6 @@
 ![image](https://cloud.githubusercontent.com/assets/1544557/19167633/6cf42cc4-8bc1-11e6-98b9-8645f01bd5ce.png)
 
-# angular2-rxjs-examples
+# RxJS Examples in Angular 2
 
 This project contains several mini-apps, showcasing RxJS observables and operators and how they can be combined to perform tasks of varying difficulty and awesomeness. Also included are several, more complex "real-world" examples that combine the power of observables with a realtime database from Firebase. Below is a link to a blog post with the AngularConnect talk and slides that facilitated the creation of this project. Oh and there are also some great resources for reactive programming. You're welcome.
 
