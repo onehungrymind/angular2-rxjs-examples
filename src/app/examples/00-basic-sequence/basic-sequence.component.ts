@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
+import { fromEvent } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { map } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-basic-sequence',
@@ -18,9 +17,11 @@ export class BasicSequenceComponent implements OnInit {
   message: string;
 
   ngOnInit() {
-    Observable.fromEvent(this.getNativeElement(this.btn), 'click')
-      // .filter(event => event.shiftKey) // Operator stacking
-      .map(event => 'Beast Mode Activated!')
+    fromEvent(this.getNativeElement(this.btn), 'click')
+      .pipe(
+        // filter((event: KeyboardEvent) => event.shiftKey), // Operator stacking
+        map(event => 'Beast Mode Activated!')
+      )
       .subscribe(result => this.message = result);
   }
 

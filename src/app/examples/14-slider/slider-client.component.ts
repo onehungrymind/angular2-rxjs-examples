@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { AngularFire } from 'angularfire2';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/pairwise';
-import 'rxjs/add/operator/startWith';
+import { Observable } from 'rxjs';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { map, startWith, tap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-slider-client',
@@ -32,10 +29,10 @@ export class SliderClientComponent implements OnInit {
   startMax = 55;
   step = 1;
 
-  constructor (private builder: FormBuilder, private af: AngularFire) {}
+  constructor (private builder: FormBuilder, private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('slider/');
+    const remote$ = this.db.object('slider/').valueChanges();
 
     this.myForm = this.builder.group({
       min: this.startMin,
@@ -43,13 +40,17 @@ export class SliderClientComponent implements OnInit {
     });
 
     this.minValue = remote$
-      .map(vals => vals.min)
-      .do(val => (<FormControl>this.myForm.controls['min']).setValue(val))
-      .startWith(this.startMin);
+      .pipe(
+        map((vals: any) => vals.min),
+        tap(val => (<FormControl>this.myForm.controls['min']).setValue(val)),
+        startWith(this.startMin),
+      );
 
     this.maxValue = remote$
-      .map(vals => vals.max)
-      .do(val => (<FormControl>this.myForm.controls['max']).setValue(val))
-      .startWith(this.startMax);
+      .pipe(
+        map((vals: any) => vals.max),
+        tap(val => (<FormControl>this.myForm.controls['max']).setValue(val)),
+        startWith(this.startMax),
+      );
   }
 }

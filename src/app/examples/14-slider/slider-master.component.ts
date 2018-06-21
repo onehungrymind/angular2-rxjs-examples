@@ -1,11 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { AngularFire } from 'angularfire2';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/pairwise';
-import 'rxjs/add/operator/startWith';
+import { Observable } from 'rxjs';
+import { filter, map, pairwise, startWith, tap } from 'rxjs/internal/operators';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-slider-master',
@@ -32,7 +29,7 @@ export class SliderMasterComponent implements OnInit {
   startMax = 55;
   step = 1;
 
-  constructor (private builder: FormBuilder, private af: AngularFire) {}
+  constructor (private builder: FormBuilder, private db: AngularFireDatabase) {}
 
   ngOnInit() {
     this.myForm = this.builder.group({
@@ -40,37 +37,43 @@ export class SliderMasterComponent implements OnInit {
       max: this.startMax
     });
 
-    const remote$ = this.af.database.object('slider/');
+    const remoteRef = this.db.object('slider/');
 
     let valueStream = this.myForm.valueChanges
-      .map(val => {
-        return {
-          min: parseFloat(val.min),
-          max: parseFloat(val.max)
-        };
-      })
-      .pairwise()
-      .filter(([oldVal, newVal]) => {
-        let isValid = true;
-        if (oldVal.min !== newVal.min && newVal.min > newVal.max) {
-          isValid = false;
-          (<FormControl>this.myForm.controls['max']).setValue(newVal.min);
-        }
-        else if (oldVal.max !== newVal.max && newVal.max < newVal.min) {
-          isValid = false;
-          (<FormControl>this.myForm.controls['min']).setValue(newVal.max);
-        }
-        return isValid;
-      })
-      .map(([oldVal, newVal]) => newVal)
-      .do(vals => remote$.update(vals))
+      .pipe(
+        map(val => {
+          return {
+            min: parseFloat(val.min),
+            max: parseFloat(val.max)
+          };
+        }),
+        pairwise(),
+        filter(([oldVal, newVal]) => {
+          let isValid = true;
+          if (oldVal.min !== newVal.min && newVal.min > newVal.max) {
+            isValid = false;
+            (<FormControl>this.myForm.controls['max']).setValue(newVal.min);
+          }
+          else if (oldVal.max !== newVal.max && newVal.max < newVal.min) {
+            isValid = false;
+            (<FormControl>this.myForm.controls['min']).setValue(newVal.max);
+          }
+          return isValid;
+        }),
+        map(([oldVal, newVal]) => newVal),
+        tap(vals => remoteRef.update(vals))
+      )
 
     this.minValue = valueStream
-      .map(vals => vals.min)
-      .startWith(this.startMin);
+      .pipe(
+        map(vals => vals.min),
+        startWith(this.startMin)
+      );
 
     this.maxValue = valueStream
-      .map(vals => vals.max)
-      .startWith(this.startMax);
+      .pipe(
+        map(vals => vals.max),
+        startWith(this.startMax)
+      );
   }
 }

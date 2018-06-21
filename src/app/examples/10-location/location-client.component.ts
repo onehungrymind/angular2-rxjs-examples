@@ -1,11 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AngularFire } from 'angularfire2';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/startWith';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { startWith } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-location-client',
@@ -19,14 +14,14 @@ import 'rxjs/add/operator/startWith';
 export class LocationClientComponent implements OnInit {
   position: any;
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('location/');
+    const remoteRef = this.db.object('location/');
+    const remote$ = remoteRef.valueChanges();
 
     remote$
-      .startWith({x: 100, y: 100})
+      .pipe(startWith({x: 100, y: 100}))
       .subscribe(result => this.position = result);
-
   }
 }

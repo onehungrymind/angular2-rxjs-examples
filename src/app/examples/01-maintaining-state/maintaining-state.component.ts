@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/startWith';
+import { fromEvent } from 'rxjs';
+import { map, scan, startWith } from 'rxjs/internal/operators';
 
 interface Coordinate {
   x: number,
@@ -27,10 +24,12 @@ export class MaintainingStateComponent implements OnInit {
   position: any;
 
   ngOnInit() {
-    Observable.fromEvent(this.getNativeElement(this.right), 'click')
-      .map(event => 10)
-      .startWith({x: 100, y: 150})
-      .scan((acc: Coordinate, curr) => Object.assign({}, acc, {x: acc.x + curr}))
+    fromEvent(this.getNativeElement(this.right), 'click')
+      .pipe(
+        map(event => 10),
+        startWith({x: 100, y: 150}),
+        scan((acc: Coordinate, curr: number) => Object.assign({}, acc, {x: acc.x + curr}))
+      )
       .subscribe(position => this.position = position);
   }
 

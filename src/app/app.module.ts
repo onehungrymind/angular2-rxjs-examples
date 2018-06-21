@@ -53,6 +53,9 @@ import {
   SliderClientComponent,
   SliderMasterComponent
 } from './examples';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -94,7 +97,9 @@ import {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabase,
     ReactiveFormsModule,
     HttpModule,
     MdButtonModule,

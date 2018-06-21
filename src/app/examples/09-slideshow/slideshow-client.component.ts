@@ -1,7 +1,8 @@
-import { Component, OnInit,  trigger, style, transition, animate } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { Component, OnInit } from '@angular/core';
 import { images } from './images';
-import 'rxjs/add/operator/startWith';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { startWith } from 'rxjs/internal/operators';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-slideshow-client',
@@ -59,13 +60,13 @@ export class SlideshowClientComponent implements OnInit {
   currentIndex: number = 0;
   currentDirection: string = 'left';
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('slideshow/');
+    const remote$ = this.db.object('slideshow/').valueChanges();
 
     remote$
-      .startWith({index: 0, direction: 'left'})
+      .pipe(startWith({index: 0, direction: 'left'}))
       .subscribe(event => {
         this.currentIndex = event.index;
         this.currentDirection = event.direction;

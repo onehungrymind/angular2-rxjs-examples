@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire } from 'angularfire2';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-game-client',
@@ -20,11 +18,11 @@ export class GameClientComponent implements OnInit {
   spaceshipPosition: Object = {};
   shots: any[] = [];
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const spaceship$ = this.af.database.object('spaceship/'),
-      shots$ = this.af.database.list('shots/');
+    const spaceship$ = this.db.object('spaceship/').valueChanges(),
+      shots$ = this.db.list('shots/').valueChanges();
 
     shots$
       .subscribe(shots => {
