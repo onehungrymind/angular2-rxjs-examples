@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-slideshow',
   styles: [`
-  md-card {
+  mat-card {
     width: 100%;
     max-width: 900px;
     box-sizing: border-box;
@@ -17,12 +17,12 @@ import { Component } from '@angular/core';
   `],
   template: `
   <div class="card-container">
-      <md-card>
+      <mat-card>
         <app-slideshow-master></app-slideshow-master>
-      </md-card>
-      <md-card>
+      </mat-card>
+      <mat-card>
         <app-slideshow-client></app-slideshow-client>
-      </md-card>
+      </mat-card>
   </div>
   `
 })

@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/takeUntil';
+import { fromEvent } from 'rxjs';
+import { map, startWith, switchMap, takeUntil, tap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-triggers',
@@ -22,24 +18,27 @@ export class TriggersComponent implements OnInit {
   ngOnInit() {
     const BALL_OFFSET = 50;
 
-    const move$ = Observable.fromEvent(document, 'mousemove')
-      .map((event: MouseEvent) => {
-        const offset = $(event.target).offset();
-        return {
-          x: event.clientX - offset.left - BALL_OFFSET,
-          y: event.pageY - BALL_OFFSET
-        };
-      });
+    const move$ = fromEvent(document, 'mousemove')
+      .pipe(
+        map((event: MouseEvent) => {
+          const offset = $(event.target).offset();
+          return {
+            x: event.clientX - offset.left - BALL_OFFSET,
+            y: event.pageY - BALL_OFFSET
+          };
+        })
+      );
 
-    const down$ = Observable.fromEvent(this.ball.nativeElement, 'mousedown')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'none');
+    const down$ = fromEvent(this.ball.nativeElement, 'mousedown')
+      .pipe(tap(event => this.ball.nativeElement.style.pointerEvents = 'none'));
 
-    const up$ = Observable.fromEvent(document, 'mouseup')
-      .do(event => this.ball.nativeElement.style.pointerEvents = 'all');
+    const up$ = fromEvent(document, 'mouseup')
+      .pipe(tap(event => this.ball.nativeElement.style.pointerEvents = 'all'));
 
-    down$
-      .switchMap(event => move$.takeUntil(up$))
-      .startWith({ x: 100, y: 100})
+    down$.pipe(
+      switchMap(event => move$.pipe(takeUntil(up$))),
+      startWith({ x: 100, y: 100})
+    )
       .subscribe(position => this.position = position);
   }
 }

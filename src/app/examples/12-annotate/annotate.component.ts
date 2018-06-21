@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-annotate',
   styles: [`
-  md-card {
+  mat-card {
     width: 400px;
     box-sizing: border-box;
     margin: 16px;
@@ -18,12 +18,12 @@ import { Component } from '@angular/core';
   `],
   template: `
   <div class="card-container">
-      <md-card>
+      <mat-card>
         <app-annotate-master></app-annotate-master>
-      </md-card>
-      <md-card>
+      </mat-card>
+      <mat-card>
           <app-annotate-client></app-annotate-client>
-      </md-card>
+      </mat-card>
   </div>
   `
 })

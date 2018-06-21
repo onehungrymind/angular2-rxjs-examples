@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/timeInterval';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/repeat';
+import { interval } from 'rxjs';
+import { repeat, startWith, take } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-game',
   styles: [`
-  md-card {
+  mat-card {
     width: 400px;
     box-sizing: border-box;
     margin: 16px;
@@ -26,23 +23,24 @@ import 'rxjs/add/operator/repeat';
   `],
   template: `
   <div class="card-container">
-      <md-card [style.background-position-y]="backgroundPosition + 'px'">
+      <mat-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-master></app-game-master>
-      </md-card>
-      <md-card [style.background-position-y]="backgroundPosition + 'px'">
+      </mat-card>
+      <mat-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-client></app-game-client>
-      </md-card>
+      </mat-card>
   </div>
   `
 })
 export class GameComponent implements OnInit{
   backgroundPosition: number = 0;
   ngOnInit() {
-    Observable
-      .interval(10)
-      .startWith(1100)
-      .take(1178)
-      .repeat()
+    interval(10)
+      .pipe(
+        startWith(1100),
+        take(1178),
+        repeat()
+      )
       .subscribe(count => this.backgroundPosition = count);
   }
 }

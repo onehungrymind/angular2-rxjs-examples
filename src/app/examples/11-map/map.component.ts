@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-map',
   styles: [`
-    md-card {
+    mat-card {
       width: 100%;
       box-sizing: border-box;
       margin: 16px;
@@ -22,12 +22,12 @@ import { Component } from '@angular/core';
     `],
   template: `
     <div class="card-container">
-        <md-card>
+        <mat-card>
           <app-map-master></app-map-master>
-        </md-card>
-        <md-card>
+        </mat-card>
+        <mat-card>
             <app-map-client></app-map-client>
-        </md-card>
+        </mat-card>
     </div>
     `
 })

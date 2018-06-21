@@ -12,24 +12,16 @@ module.exports = function (config) {
       require('angular-cli/plugins/karma')
     ],
     files: [
-      { pattern: './src/test.ts', watched: false }
+      
     ],
     preprocessors: {
       './src/test.ts': ['angular-cli']
     },
     remapIstanbulReporter: {
-      reports: {
+      dir: require('path').join(__dirname, 'coverage'), reports: {
         html: 'coverage',
         lcovonly: './coverage/coverage.lcov'
       }
     },
-    angularCliConfig: './angular-cli.json',
-    reporters: ['progress', 'karma-remap-istanbul'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
-  });
+    );
 };

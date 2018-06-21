@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-animation',
@@ -21,14 +20,16 @@ export class AnimationComponent implements OnInit {
   ngOnInit() {
     const BALL_OFFSET = 25;
 
-    Observable.fromEvent(document, 'mousemove')
-      .map((event: MouseEvent) => {
-        const offset = $(event.target).offset();
-        return {
-          x: event.clientX - offset.left - BALL_OFFSET,
-          y: event.pageY - BALL_OFFSET
-        };
-      })
+    fromEvent(document, 'mousemove')
+      .pipe(
+        map((event: MouseEvent) => {
+          const offset = $(event.target).offset();
+          return {
+            x: event.clientX - offset.left - BALL_OFFSET,
+            y: event.pageY - BALL_OFFSET
+          };
+        })
+      )
       .subscribe(circle => this.circles = [...this.circles, circle])
   }
 }

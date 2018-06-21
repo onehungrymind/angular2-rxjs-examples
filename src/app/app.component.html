@@ -1,26 +1,26 @@
-<md-sidenav-layout fullscreen>
-	<md-sidenav #sidenav mode="side" class="app-sidenav">
-		<md-nav-list>
-			<a md-list-item
+<mat-drawer-container fullscreen>
+	<mat-drawer #sidenav mode="side" class="app-sidenav">
+		<mat-nav-list>
+			<a mat-list-item
 				[routerLink]="example.path"
 				routerLinkActive="active"
 				*ngFor="let example of examples">
-				<span md-line>{{example.name}}</span>
+				<span mat-line>{{example.name}}</span>
 			</a>
-		</md-nav-list>
-	</md-sidenav>
+		</mat-nav-list>
+	</mat-drawer>
 
-	<md-toolbar color="primary">
+	<mat-toolbar color="primary">
 		<button class="app-icon-button" (click)="sidenav.toggle()">
 			<i class="material-icons app-toolbar-menu">menu</i>
 		</button>
 		RxJS Examples
-	</md-toolbar>
+	</mat-toolbar>
 
 	<div class="app-content">
 		<router-outlet></router-outlet>
 	</div>
-</md-sidenav-layout>
+</mat-drawer-container>
 
 <!-- SIX
 <div class="container">
@@ -58,8 +58,8 @@
 
 
 <!-- ONE
-<button #left md-raised-button color="accent">Left</button>
-<button #right md-raised-button color="accent">Right</button>
+<button #left mat-raised-button color="accent">Left</button>
+<button #right mat-raised-button color="accent">Right</button>
 <div class="container">
 	<div #ball class="ball"
 		[style.left]="position.x + 'px'"
@@ -69,7 +69,7 @@
 -->
 
 <!-- ZERO
-<button #btn md-raised-button color="accent">Click me!</button>
+<button #btn mat-raised-button color="accent">Click me!</button>
 <div class="container">
 	<h1>{{message}}</h1>
 </div>

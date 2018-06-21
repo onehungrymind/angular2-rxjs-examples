@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-counter-client',
@@ -13,13 +13,13 @@ import { AngularFire } from 'angularfire2';
 export class CounterClientComponent implements OnInit {
   count: number;
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('clicker/');
+    const remote$ = this.db.object('clicker/').valueChanges();
 
     remote$
-      .subscribe(result => this.count = result.ticker)
+      .subscribe((result: any) => this.count = result.ticker)
     ;
   }
 }

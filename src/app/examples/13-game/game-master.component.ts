@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire } from 'angularfire2';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 const SPACESHIP_OFFSET = 40,
   SHOT_OFFSET = 2;
@@ -24,23 +23,25 @@ const SPACESHIP_OFFSET = 40,
 export class GameMasterComponent implements OnInit {
   spaceshipPosition: Object = {};
   shots: any[] = [];
-  shots$: any;
+  shotsRef: any;
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const spaceship$ = this.af.database.object('spaceship/'),
-      shots$ = this.af.database.list('shots/');
+    const spaceShipRef = this.db.object('spaceship/'),
+      spaceship$ = spaceShipRef.valueChanges(),
+      shotsRef = this.db.list('shots/'),
+      shots$ = shotsRef.valueChanges();
 
-    this.shots$ = shots$;
+    this.shotsRef = shotsRef;
 
-    Observable.fromEvent(document, 'click')
-      .map(this.parseEvent)
-      .subscribe(shot => shots$.push(shot));
+    fromEvent(document, 'click')
+      .pipe(map(this.parseEvent))
+      .subscribe(shot => shotsRef.push(shot));
 
-    Observable.fromEvent(document, 'mousemove')
-      .map(this.parseEvent)
-      .subscribe(event => spaceship$.update(event));
+    fromEvent(document, 'mousemove')
+      .pipe(map(this.parseEvent))
+      .subscribe(event => spaceShipRef.update(event));
 
     shots$
       .subscribe(shots => {
@@ -67,7 +68,7 @@ export class GameMasterComponent implements OnInit {
 
   removeShot(shot) {
     if (shot) {
-      this.shots$.remove(shot.$key);
+      this.shotsRef.remove(shot.$key);
     }
   }
 }

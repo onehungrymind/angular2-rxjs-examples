@@ -1,19 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AngularFire } from 'angularfire2';
 import { images } from './images';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/startWith';
+import { fromEvent, merge } from 'rxjs';
+import { map, scan, startWith } from 'rxjs/internal/operators';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-slideshow-master',
   template: `
-  <button #previous md-raised-button color="accent">Previous</button>
-  <button #next md-raised-button color="accent">Next</button>
-  `
+  <button #previous mat-raised-button color="accent">Previous</button>
+  <button #next mat-raised-button color="accent">Next</button>
+  `,
+  styles: [`
+    :host {
+      display: flex;
+      justify-content: space-between;
+    }
+  `]
 })
 export class SlideshowMasterComponent implements OnInit {
   @ViewChild('previous') previous;
@@ -21,29 +23,31 @@ export class SlideshowMasterComponent implements OnInit {
   images: any[] = images;
   position: any;
 
-  constructor(private af: AngularFire) {}
+  constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    const remote$ = this.af.database.object('slideshow/');
+    const remoteRef = this.db.object('slideshow/');
 
-    const previous$ = Observable.fromEvent(this.getNativeElement(this.previous), 'click')
-      .map(event => {return {shift: -1, direction: 'right'}});
+    const previous$ = fromEvent(this.getNativeElement(this.previous), 'click')
+      .pipe(map(event => {return {shift: -1, direction: 'right'}}));
 
-    const next$ = Observable.fromEvent(this.getNativeElement(this.next), 'click')
-      .map(event => {return {shift: +1, direction: 'left'}});
+    const next$ = fromEvent(this.getNativeElement(this.next), 'click')
+      .pipe(map(event => {return {shift: +1, direction: 'left'}}));
 
-    Observable.merge(previous$, next$)
-      .startWith({index: 0})
-      .scan((acc, curr) => {
-        const projectedIndex = acc.index + curr.shift;
+    merge(previous$, next$)
+      .pipe(
+        startWith({index: 0} as any),
+        scan((acc, curr) => {
+          const projectedIndex = acc.index + curr.shift;
 
-        let adjustedIndex = projectedIndex < 0 ? this.images.length - 1
-          : projectedIndex >= this.images.length ? 0
-          : projectedIndex;
+          let adjustedIndex = projectedIndex < 0 ? this.images.length - 1
+            : projectedIndex >= this.images.length ? 0
+              : projectedIndex;
 
-        return {index: adjustedIndex, direction: curr.direction};
-      })
-      .subscribe(event => remote$.update(event));
+          return {index: adjustedIndex, direction: curr.direction};
+        })
+      )
+      .subscribe(event => remoteRef.update(event));
   }
 
   getNativeElement(element) {
