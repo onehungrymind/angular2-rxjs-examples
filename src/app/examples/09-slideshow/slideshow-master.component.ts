@@ -7,9 +7,15 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Component({
   selector: 'app-slideshow-master',
   template: `
-  <button #previous md-raised-button color="accent">Previous</button>
-  <button #next md-raised-button color="accent">Next</button>
-  `
+  <button #previous mat-raised-button color="accent">Previous</button>
+  <button #next mat-raised-button color="accent">Next</button>
+  `,
+  styles: [`
+    :host {
+      display: flex;
+      justify-content: space-between;
+    }
+  `]
 })
 export class SlideshowMasterComponent implements OnInit {
   @ViewChild('previous') previous;

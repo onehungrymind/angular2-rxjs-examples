@@ -1,4 +1,4 @@
-md-toolbar {
+mat-toolbar {
   position: relative;
   z-index:1;
 }
@@ -36,4 +36,5 @@ md-toolbar {
     padding: 0;
     text-align: left;
     text-decoration: none;
+    display: flex;
 }

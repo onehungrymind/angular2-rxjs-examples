@@ -23,7 +23,7 @@ const SPACESHIP_OFFSET = 40,
 export class GameMasterComponent implements OnInit {
   spaceshipPosition: Object = {};
   shots: any[] = [];
-  shots$: any;
+  shotsRef: any;
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -33,7 +33,7 @@ export class GameMasterComponent implements OnInit {
       shotsRef = this.db.list('shots/'),
       shots$ = shotsRef.valueChanges();
 
-    this.shots$ = shots$;
+    this.shotsRef = shotsRef;
 
     fromEvent(document, 'click')
       .pipe(map(this.parseEvent))
@@ -68,7 +68,7 @@ export class GameMasterComponent implements OnInit {
 
   removeShot(shot) {
     if (shot) {
-      this.shots$.remove(shot.$key);
+      this.shotsRef.remove(shot.$key);
     }
   }
 }

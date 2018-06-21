@@ -10,7 +10,7 @@ interface Coordinate {
 @Component({
   selector: 'app-maintaining-state',
   template: `
-  <button #right md-raised-button color="accent">Move Right</button>
+  <button #right mat-raised-button color="accent">Move Right</button>
   <div class="container">
     <div #ball class="ball"
       [style.left]="position.x + 'px'"

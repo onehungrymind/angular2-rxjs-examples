@@ -10,7 +10,7 @@ interface Ticker {
 @Component({
   selector: 'app-counter-master',
   template: `
-  <button #btn md-raised-button color="accent">Click me!</button>
+  <button #btn mat-raised-button color="accent">Click me!</button>
   `
 })
 export class CounterMasterComponent implements OnInit {

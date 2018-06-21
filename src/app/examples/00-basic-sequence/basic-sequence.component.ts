@@ -6,7 +6,7 @@ import { map } from 'rxjs/internal/operators';
 @Component({
   selector: 'app-basic-sequence',
   template: `
-  <button #btn md-raised-button color="accent">Click me!</button>
+  <button #btn mat-raised-button color="accent">Click me!</button>
   <div class="container">
     <h1>{{message}}</h1>
   </div>

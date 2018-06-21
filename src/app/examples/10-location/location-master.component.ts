@@ -44,12 +44,12 @@ export class LocationMasterComponent implements OnInit {
     down$
       .pipe(
         switchMap(event => move$.pipe(takeUntil(up$))),
-        startWith({ x: 100, y: 100})
+        startWith({ x: window.innerWidth / 2, y: 100})
       )
       .subscribe(event => remoteRef.update(event));
 
     remote$
-      .pipe(startWith({x: 100, y: 100}))
+      .pipe(startWith({x: window.innerWidth / 2, y: 100}))
       .subscribe(result => this.position = result);
   }
 }

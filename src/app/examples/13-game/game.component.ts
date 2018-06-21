@@ -5,7 +5,7 @@ import { repeat, startWith, take } from 'rxjs/internal/operators';
 @Component({
   selector: 'app-game',
   styles: [`
-  md-card {
+  mat-card {
     width: 400px;
     box-sizing: border-box;
     margin: 16px;
@@ -23,12 +23,12 @@ import { repeat, startWith, take } from 'rxjs/internal/operators';
   `],
   template: `
   <div class="card-container">
-      <md-card [style.background-position-y]="backgroundPosition + 'px'">
+      <mat-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-master></app-game-master>
-      </md-card>
-      <md-card [style.background-position-y]="backgroundPosition + 'px'">
+      </mat-card>
+      <mat-card [style.background-position-y]="backgroundPosition + 'px'">
         <app-game-client></app-game-client>
-      </md-card>
+      </mat-card>
   </div>
   `
 })

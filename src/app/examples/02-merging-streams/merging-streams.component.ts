@@ -10,8 +10,8 @@ interface Coordinate {
 @Component({
   selector: 'app-merging-streams',
   template: `
-  <button #left md-raised-button color="accent">Move Left</button>
-  <button #right md-raised-button color="accent">Move Right</button>
+  <button [style.margin-right]="'10px'" #left mat-raised-button color="accent">Move Left</button>
+  <button #right mat-raised-button color="accent">Move Right</button>
   <div class="container">
     <div #ball class="ball"
       [style.left]="position.x + 'px'"

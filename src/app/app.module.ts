@@ -7,12 +7,12 @@ import { AngularFireModule } from 'angularfire2';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './firebase.conf';
 
-import { MdButtonModule } from '@angular2-material/button';
-import { MdCardModule } from '@angular2-material/card';
-import { MdIconModule } from '@angular2-material/icon';
-import { MdListModule } from '@angular2-material/list';
-import { MdSidenavModule } from '@angular2-material/sidenav';
-import { MdToolbarModule } from '@angular2-material/toolbar';
+// import { MdButtonModule } from '@angular2-material/button';
+// import { MdCardModule } from '@angular2-material/card';
+// import { MdIconModule } from '@angular2-material/icon';
+// import { MdListModule } from '@angular2-material/list';
+// import { MdSidenavModule } from '@angular2-material/sidenav';
+// import { MdToolbarModule } from '@angular2-material/toolbar';
 
 import { AppComponent } from './app.component';
 import { routing, appRoutingProviders } from './app.routing';
@@ -54,8 +54,9 @@ import {
   SliderMasterComponent
 } from './examples';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -99,15 +100,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabase,
+    AngularFireDatabaseModule,
     ReactiveFormsModule,
     HttpModule,
-    MdButtonModule,
-    MdCardModule,
-    MdIconModule,
-    MdListModule,
-    MdSidenavModule,
-    MdToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatSidenavModule,
+    MatToolbarModule,
     routing
   ],
   providers: [
